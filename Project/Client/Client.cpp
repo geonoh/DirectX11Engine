@@ -4,6 +4,14 @@
 #include "framework.h"
 #include "Client.h"
 
+#include <Engine/Test.h>
+
+#ifdef _DEBUG
+#pragma comment(lib, "Engine/Engine_d.lib");
+#else
+#pragma comment(lib, "Engine/Engine.lib");
+#endif
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -20,6 +28,8 @@ int APIENTRY wWinMain(_In_ const HINSTANCE hInstance,
                       _In_ LPWSTR lpCmdLine,
                       _In_ const int nCmdShow)
 {
+	const int value = Add(10, 20);
+
 	MyRegisterClass(hInstance);
 	hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
