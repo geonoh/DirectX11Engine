@@ -4,7 +4,7 @@
 #include "framework.h"
 #include "Client.h"
 
-#include <Engine/Test.h>
+#include <Engine/CEngine.h>
 
 #ifdef _DEBUG
 #pragma comment(lib, "Engine/Engine_d.lib")
@@ -28,8 +28,6 @@ int APIENTRY wWinMain(_In_ const HINSTANCE hInstance,
                       _In_ LPWSTR lpCmdLine,
                       _In_ const int nCmdShow)
 {
-	const int value = Add(10, 20);
-
 	MyRegisterClass(hInstance);
 	hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
@@ -38,7 +36,7 @@ int APIENTRY wWinMain(_In_ const HINSTANCE hInstance,
 	const HWND hWnd = CreateWindowW(L"Test", L"GameClient", WS_OVERLAPPEDWINDOW,
 	                                CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-	if (!hWnd)
+	 if (!hWnd)
 	{
 		return FALSE;
 	}

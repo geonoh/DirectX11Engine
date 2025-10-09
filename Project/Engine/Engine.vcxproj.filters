@@ -8,6 +8,9 @@
     <Filter Include="Default">
       <UniqueIdentifier>{8258897c-5151-48fb-ab41-d1f21edd83b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Engine">
+      <UniqueIdentifier>{aa991a1f-46ba-4a6a-bc45-721bf905d3e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -16,7 +19,9 @@
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h" />
+    <ClInclude Include="CEngine.h">
+      <Filter>01. Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -25,6 +30,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="CEngine.cpp">
+      <Filter>01. Engine</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
