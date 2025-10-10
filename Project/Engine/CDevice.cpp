@@ -46,7 +46,32 @@ int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
 		return E_FAIL;
 	}
 
+	// ViewPort 설정
+	// 윈도우 화면에 보여질 영역 설정
+	D3D11_VIEWPORT viewport = {};
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = m_RenderResolution.x;
+	viewport.Height = m_RenderResolution.y;
+
+	// DepthStencil buffer texture 깊이의 범위를 0에서 1로 한다는 의미
+	viewport.MinDepth = 0;
+	viewport.MaxDepth = 1;
+
+	// Viewport 정보 세팅
+	m_Context->RSSetViewports(1, &viewport);
+
 	return S_OK;
+}
+
+void CDevice::ClearTarget(float(& _arrColor)[4])
+{
+	m_Context->ClearRenderTargetView(m_RTV.Get(), _arrColor);
+}
+
+void CDevice::Present()
+{
+	m_SwapChain->Present(0, 0);
 }
 
 int CDevice::CreateSwapChain()

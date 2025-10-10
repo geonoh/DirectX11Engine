@@ -26,6 +26,8 @@ public:
 public:
 	~CDevice();
 	int Init(HWND _hWnd, POINT _Resolution);
+	void ClearTarget(float(&_arrColor)[4]);
+	void Present();
 
 private:
 	int CreateSwapChain();

@@ -5,17 +5,17 @@
 
 CEngine::CEngine()
 	: m_hMainHwnd(nullptr)
-	, m_Resolution{}
+	  , m_Resolution{}
 {
 }
 
-int CEngine::Init (HWND _hWnd, POINT _Resolution)
+int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
 {
 	m_hMainHwnd = _hWnd;
 	m_Resolution = _Resolution;
 
 	// 윈도우 크기 설정
-	RECT rt = { 0, 0, m_Resolution.x, m_Resolution.y };
+	RECT rt = {0, 0, m_Resolution.x, m_Resolution.y};
 	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
 	SetWindowPos(m_hMainHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
 
@@ -27,4 +27,18 @@ int CEngine::Init (HWND _hWnd, POINT _Resolution)
 	}
 
 	return S_OK;
+}
+
+void CEngine::Progress()
+{
+	// Level->Tick();
+
+	// Clear
+	float ClearColor[4] = {0.3f, 0.3f, 0.3f, 1.f};
+	CDevice::GetInst()->ClearTarget(ClearColor);
+
+	// Level->Render();
+
+	// SwapChain->Present();
+	CDevice::GetInst()->Present();
 }

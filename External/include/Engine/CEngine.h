@@ -8,6 +8,7 @@ private:
 
 public:
 	int Init(HWND _hWnd, POINT _Resolution);
+	static void Progress();
 
 public:
 	static CEngine* GetInst()

@@ -75,6 +75,8 @@ int APIENTRY wWinMain(_In_ const HINSTANCE hInstance,
 		else // 꺼내올 메시지가 없음
 		{
 			// Game Engine 실행
+			// CEngine::Progress() 한 번 수행 -> 1프레임
+			CEngine::GetInst()->Progress();
 		}
 	}
 
