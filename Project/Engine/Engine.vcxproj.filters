@@ -32,6 +32,7 @@
       <Filter>01. Header</Filter>
     </ClInclude>
     <ClInclude Include="CDevice.h" />
+    <ClInclude Include="Temp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -44,5 +45,6 @@
       <Filter>02. Engine</Filter>
     </ClCompile>
     <ClCompile Include="CDevice.cpp" />
+    <ClCompile Include="Temp.cpp" />
   </ItemGroup>
 </Project>
