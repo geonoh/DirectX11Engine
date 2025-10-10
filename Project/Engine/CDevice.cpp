@@ -3,40 +3,150 @@
 
 CDevice::~CDevice()
 {
-    m_Device->Release();
-    m_Context->Release();
+	m_Device->Release();
+	m_Context->Release();
+	m_SwapChain->Release();
+	m_RenderTargetTex->Release();
+
+	m_RTV->Release();
+	m_DepthStencilTex->Release();
+	m_DSV->Release();
 }
 
-int CDevice::Init(HWND _hWnd, POINT _Resolution)
+int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
 {
-    m_hMainWnd = _hWnd;
-    m_RenderResolution = _Resolution;
+	m_hMainWnd = _hWnd;
+	m_RenderResolution = _Resolution;
 
-    UINT iFlag = 0;
+	UINT iFlag = 0;
 #ifdef _DEBUG
-    iFlag = D3D11_CREATE_DEVICE_DEBUG;
+	iFlag = D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
-    D3D_FEATURE_LEVEL level = D3D_FEATURE_LEVEL_11_0;
+	D3D_FEATURE_LEVEL level = D3D_FEATURE_LEVEL_11_0;
 
-    D3D11CreateDevice(
-        nullptr,
-        D3D_DRIVER_TYPE_HARDWARE,
-        nullptr,
-        iFlag,
-        nullptr,
-        0,
-        D3D11_SDK_VERSION,
-        &m_Device,
-        &level,
-        &m_Context);
+	const HRESULT result = D3D11CreateDevice(
+		nullptr,
+		D3D_DRIVER_TYPE_HARDWARE,
+		nullptr,
+		iFlag,
+		nullptr,
+		0,
+		D3D11_SDK_VERSION,
+		&m_Device,
+		&level,
+		&m_Context);
 
-    return S_OK;
+	if (FAILED(result))
+	{
+		MessageBox(m_hMainWnd, L"D3D11CreateDevice 실패", L"D3D11CreateDevice 실패", MB_OK);
+		return E_FAIL;
+	}
+
+	// Swap chain 생성
+	if (FAILED(CreateSwapChain()))
+	{
+		return E_FAIL;
+	}
+
+	if (FAILED(CreateView()))
+	{
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
+
+int CDevice::CreateSwapChain()
+{
+	// 스왑 이펙트에 따라서
+	// 1. 비트 블록 전송 모델
+	// DXGI_SWAP_EFFECT_DISCARD	= 0,
+	// DXGI_SWAP_EFFECT_SEQUENTIAL = 1,
+
+	// 2. 대칭 이동 프레젠테이션 모델 - 티어링을 방지하기 위함
+	// 프레임에 제한을 걸어야함
+	// DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL	= 3,
+	// DXGI_SWAP_EFFECT_FLIP_DISCARD = 4
+	DXGI_SWAP_CHAIN_DESC Desc = {};
+
+	// SwapChain이 화면을 게시(Present)할 때, 출력 목적지 윈도우
+	Desc.OutputWindow = m_hMainWnd;
+	Desc.Windowed = true;
+
+	// SwapChain이 만들어질때 버퍼 옵션
+	Desc.BufferCount = 1;
+	Desc.BufferDesc.Width = m_RenderResolution.x;
+	Desc.BufferDesc.Height = m_RenderResolution.y;
+	Desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	Desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+
+	Desc.BufferDesc.RefreshRate.Denominator = 1;
+	Desc.BufferDesc.RefreshRate.Numerator = 60;
+	Desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+	Desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+
+	Desc.SampleDesc.Count = 1;
+	Desc.SampleDesc.Quality = 0;
+
+	Desc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+
+
+	IDXGIDevice* pDXGIDevice = nullptr;
+	IDXGIAdapter* pAdapter = nullptr;
+	IDXGIFactory* pFactory = nullptr;
+
+	m_Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&pDXGIDevice);
+	pDXGIDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&pAdapter);
+	pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&pFactory);
+
+	if (FAILED(pFactory->CreateSwapChain(m_Device, &Desc, &m_SwapChain)))
+	{
+		return E_FAIL;
+	}
+
+	pDXGIDevice->Release();
+	pAdapter->Release();
+	pFactory->Release();
+
+	return S_OK;
+}
+
+int CDevice::CreateView()
+{
+	// 1. RenderTarget Texture를 스왑체인으로부터 가져오기
+	m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&m_RenderTargetTex);
+
+	// 2. RenderTargetView를 생성한다.
+	m_Device->CreateRenderTargetView(m_RenderTargetTex, nullptr, &m_RTV);
+
+	// 3. Depth Stencil용 Texture를 제작
+	D3D11_TEXTURE2D_DESC Desc = {};
+	Desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	Desc.Width = m_RenderResolution.x;
+	Desc.Height = m_RenderResolution.y;
+	Desc.ArraySize = 1;
+	Desc.CPUAccessFlags = 0;
+	Desc.Usage = D3D11_USAGE_DEFAULT;
+	Desc.MipLevels = 1;
+	Desc.SampleDesc.Count = 1;
+	Desc.SampleDesc.Quality = 0;
+	Desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+	m_Device->CreateTexture2D(&Desc, nullptr, &m_DepthStencilTex);
+
+	// 4. DepthStencil View 만들기
+	m_Device->CreateDepthStencilView(m_DepthStencilTex, nullptr, &m_DSV);
+
+	// 4. RenderTarget과 DepthStencilTarget을 출력으로 지정한다.
+	m_Context->OMSetRenderTargets(1, &m_RTV, m_DSV);
+
+	return S_OK;
 }
 
 CDevice::CDevice() : m_hMainWnd(nullptr), m_RenderResolution(), m_Device(nullptr), m_Context(nullptr),
                      m_SwapChain(nullptr),
-                     m_RenderTarget(nullptr),
+                     m_RenderTargetTex(nullptr),
                      m_RTV(nullptr),
                      m_DepthStencilTex(nullptr),
                      m_DSV(nullptr)

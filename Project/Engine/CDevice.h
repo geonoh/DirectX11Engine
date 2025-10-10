@@ -10,7 +10,7 @@ private:
 	ID3D11DeviceContext* m_Context; // GPU 랜더링 관련 명령
 
 	IDXGISwapChain* m_SwapChain; // 렌던타켓 버퍼 소유, 화면에 최종 장면을 게시
-	ID3D11Texture2D* m_RenderTarget;
+	ID3D11Texture2D* m_RenderTargetTex;
 	ID3D11RenderTargetView* m_RTV;
 
 	ID3D11Texture2D* m_DepthStencilTex;
@@ -26,6 +26,10 @@ public:
 public:
 	~CDevice();
 	int Init(HWND _hWnd, POINT _Resolution);
+
+private:
+	int CreateSwapChain();
+	int CreateView();
 
 private:
 	CDevice();
