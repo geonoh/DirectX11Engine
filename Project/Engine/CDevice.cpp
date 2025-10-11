@@ -31,7 +31,6 @@ int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
 
 	if (FAILED(result))
 	{
-		MessageBox(m_hMainWnd, L"D3D11CreateDevice 실패", L"D3D11CreateDevice 실패", MB_OK);
 		return E_FAIL;
 	}
 
