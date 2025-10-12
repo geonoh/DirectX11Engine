@@ -3,6 +3,13 @@
 
 #include "CDevice.h"
 
+#include "Temp.h"
+
+CEngine::~CEngine()
+{
+	TempRelease();
+}
+
 CEngine::CEngine()
 	: m_hMainHwnd(nullptr)
 	  , m_Resolution{}
@@ -26,18 +33,24 @@ int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
 		return E_FAIL;
 	}
 
+	if (FAILED(TempInit()))
+	{
+		MessageBox(m_hMainHwnd, L"Device 초기화 실패", L"TempInit 초기화 실패", MB_OK);
+		return E_FAIL;
+	}
+
 	return S_OK;
 }
 
 void CEngine::Progress()
 {
-	// Level->Tick();
+	TempTick();
 
 	// Clear
 	float ClearColor[4] = {0.3f, 0.3f, 0.3f, 1.f};
 	CDevice::GetInst()->ClearTarget(ClearColor);
 
-	// Level->Render();
+	TempRender();
 
 	// SwapChain->Present();
 	CDevice::GetInst()->Present();

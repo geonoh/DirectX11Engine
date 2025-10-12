@@ -18,6 +18,7 @@ public:
 	}
 
 	CEngine(const CEngine& engine) = delete;
+	~CEngine();
 
 private:
 	CEngine();

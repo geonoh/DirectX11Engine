@@ -29,6 +29,9 @@ public:
 	void ClearTarget(float(&_arrColor)[4]);
 	void Present();
 
+	ID3D11Device* GetDevice();
+	ID3D11DeviceContext* GetContext();
+
 private:
 	int CreateSwapChain();
 	int CreateView();

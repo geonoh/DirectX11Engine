@@ -73,6 +73,16 @@ void CDevice::Present()
 	m_SwapChain->Present(0, 0);
 }
 
+ID3D11Device* CDevice::GetDevice()
+{
+	return m_Device.Get();
+}
+
+ID3D11DeviceContext* CDevice::GetContext()
+{
+	return m_Context.Get();
+}
+
 int CDevice::CreateSwapChain()
 {
 	// 스왑 이펙트에 따라서
