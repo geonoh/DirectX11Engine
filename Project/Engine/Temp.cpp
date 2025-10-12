@@ -72,7 +72,6 @@ int TempInit()
 	// 정점 버퍼 생성
 	D3D11_BUFFER_DESC VBDesc = {};
 	VBDesc.ByteWidth = sizeof(Vtx) * 3;
-	VBDesc.StructureByteStride = sizeof(Vtx);
 	VBDesc.MiscFlags = 0;
 
 	// 버퍼가 생성된 이후에 CPU에서 접근해서 GPU에 있는 데이터를
