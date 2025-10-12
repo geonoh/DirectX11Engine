@@ -20,6 +20,12 @@
     <Filter Include="Module">
       <UniqueIdentifier>{6e7cd1e6-288a-437e-ae74-fac509c6c0f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HLSL">
+      <UniqueIdentifier>{7d745bc7-29de-4c08-a627-9f3962ca790d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HLSL\2D">
+      <UniqueIdentifier>{86780a16-636b-4c02-9416-99480ca7a38a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,5 +69,10 @@
     <None Include="SimpleMath.inl">
       <Filter>Module</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="std2d.fx">
+      <Filter>HLSL\2D</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

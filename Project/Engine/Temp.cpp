@@ -47,7 +47,21 @@
 // 정점 정보를 저장하는 버퍼
 ComPtr<ID3D11Buffer> g_VB; // VertexBuffer
 
+// 정점 하나를 구성하는 Layout 정보	// VertexShader에서 어떻게 데이터를 받을지.
+ComPtr<ID3D11InputLayout> g_Layout;
+
+// System Memory 정점 정보
 Vtx g_arrVtx[3] = {};
+
+// HLSL : 쉐이더 버전 C++이라고 생각하면된다
+
+// VertexShader
+ComPtr<ID3DBlob> g_VSBlob; // 컴파일 한 쉐이더 코드를 저장시키는 용도
+ComPtr<ID3D11VertexShader> g_VS; // 저장된 쉐이더 코드를 이용해서 VS생성
+
+// PixelShader
+ComPtr<ID3DBlob> g_PSBlob; // 컴파일 한 쉐이더 코드를 저장시키는 용도
+ComPtr<ID3D11PixelShader> g_PS; // 저장된 쉐이더 코드를 이용해서 PS생성
 
 int TempInit()
 {
@@ -87,6 +101,30 @@ int TempInit()
 	{
 		return E_FAIL;
 	}
+
+	// 버텍스 쉐이더 만들기
+
+	// 정점 레이아웃 정보 만들기 (즉, Vtx의 구조)
+	D3D11_INPUT_ELEMENT_DESC LayoutDesc[2] = {};
+
+	LayoutDesc[0].AlignedByteOffset = 0;
+	LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;// Vec3과 맞는 사이즈 강제로 맞춤;;; (픽셀 포멧)
+	LayoutDesc[0].InputSlot = 0;
+	LayoutDesc[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	LayoutDesc[0].InstanceDataStepRate = 0;
+	LayoutDesc[0].SemanticName = "POSITION";
+	LayoutDesc[0].SemanticIndex = 0;
+
+	LayoutDesc[1].AlignedByteOffset = 12;
+	LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;// Vec3과 맞는 사이즈 강제로 맞춤;;; (픽셀 포멧)
+	LayoutDesc[1].InputSlot = 0;
+	LayoutDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	LayoutDesc[1].InstanceDataStepRate = 0;
+	LayoutDesc[1].SemanticName = "COLOR";
+	LayoutDesc[1].SemanticIndex = 1;
+
+
+	//DEVICE->CreateInputLayout(LayoutDesc, 2, );
 
 	return S_OK;
 }
