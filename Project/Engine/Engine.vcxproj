@@ -72,10 +72,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>$(ProjectName)_d</TargetName>
-    <OutDir>$(SolutionDir)External\Library\$(ProjectName)</OutDir>
+    <OutDir>$(SolutionDir)External\Library\$(ProjectName)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)External\Library\$(ProjectName)</OutDir>
+    <OutDir>$(SolutionDir)External\Library\$(ProjectName)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,6 +159,7 @@ call Copy.bat
     <ClInclude Include="global.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="singleton.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="Temp.h" />
   </ItemGroup>

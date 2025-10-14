@@ -19,3 +19,4 @@ using namespace DirectX::SimpleMath;
 
 #include "define.h"
 #include "struct.h"
+#include "singleton.h"

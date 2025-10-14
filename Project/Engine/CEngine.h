@@ -1,7 +1,9 @@
 #pragma once
 
-class CEngine
+class CEngine : public CSingleton<CEngine>
 {
+	SINGLE(CEngine);
+
 private:
 	HWND m_hMainHwnd;
 	POINT m_Resolution;
@@ -9,17 +11,4 @@ private:
 public:
 	int Init(HWND _hWnd, POINT _Resolution);
 	void Progress();
-
-public:
-	static CEngine* GetInst()
-	{
-		static CEngine engine;
-		return &engine;
-	}
-
-	CEngine(const CEngine& engine) = delete;
-	~CEngine();
-
-private:
-	CEngine();
 };

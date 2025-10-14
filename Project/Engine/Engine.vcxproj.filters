@@ -40,7 +40,6 @@
     <ClInclude Include="global.h">
       <Filter>01. Header</Filter>
     </ClInclude>
-    <ClInclude Include="CDevice.h" />
     <ClInclude Include="Temp.h" />
     <ClInclude Include="SimpleMath.h">
       <Filter>Module</Filter>
@@ -50,6 +49,12 @@
     </ClInclude>
     <ClInclude Include="define.h">
       <Filter>01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Module</Filter>
+    </ClInclude>
+    <ClInclude Include="CDevice.h">
+      <Filter>03. Device</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -62,8 +67,10 @@
     <ClCompile Include="CEngine.cpp">
       <Filter>02. Engine</Filter>
     </ClCompile>
-    <ClCompile Include="CDevice.cpp" />
     <ClCompile Include="Temp.cpp" />
+    <ClCompile Include="CDevice.cpp">
+      <Filter>03. Device</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">

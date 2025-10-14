@@ -1,7 +1,9 @@
 #pragma once
 
-class CDevice
+class CDevice : public CSingleton<CDevice>
 {
+	SINGLE(CDevice);
+
 private:
 	HWND m_hMainWnd;
 	POINT m_RenderResolution;
@@ -24,7 +26,6 @@ public:
 	}
 
 public:
-	~CDevice();
 	int Init(HWND _hWnd, POINT _Resolution);
 	void ClearTarget(float(&_arrColor)[4]);
 	void Present();
@@ -35,10 +36,6 @@ public:
 private:
 	int CreateSwapChain();
 	int CreateView();
-
-private:
-	CDevice();
-	CDevice(const CDevice& other) = delete;
 
 	static constexpr float MAX_DEPTH_VALUE = 1.f;
 };
