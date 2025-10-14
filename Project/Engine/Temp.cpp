@@ -90,10 +90,12 @@ int TempInit()
 	VBDesc.ByteWidth = sizeof(Vtx) * 3;
 	VBDesc.MiscFlags = 0;
 
-	// 버퍼가 생성된 이후에 CPU에서 접근해서 GPU에 있는 데이터를
-	// 덮어쓰기가 가능하게 설정
 	VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	// 버퍼가 생성된 이후에 CPU에서 접근해서 GPU에 있는 데이터를
+	// 덮어쓰기가 가능하게 설정 - TempTick에서 Map/Unmap을 사용하기 위함.
+	// 설정이 안되어있으면 Map/Unmap 실패함
 	VBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
 	VBDesc.Usage = D3D11_USAGE_DYNAMIC;
 
 	D3D11_SUBRESOURCE_DATA SubDesc = {};
@@ -228,6 +230,44 @@ void TempRelease()
 
 void TempTick()
 {
+	if (GetAsyncKeyState('W') & 0x8001)
+	{
+		for (Vtx& vertex : g_arrVtx)
+		{
+			vertex.vPos.y += 0.001f;
+		}
+	}
+	if (GetAsyncKeyState('S') & 0x8001)
+	{
+		for (Vtx& vertex : g_arrVtx)
+		{
+			vertex.vPos.y -= 0.001f;
+		}
+	}
+	if (GetAsyncKeyState('A') & 0x8001)
+	{
+		for (Vtx& vertex : g_arrVtx)
+		{
+			vertex.vPos.x -= 0.001f;
+		}
+	}
+	if (GetAsyncKeyState('D') & 0x8001)
+	{
+		for (Vtx& vertex : g_arrVtx)
+		{
+			vertex.vPos.x += 0.001f;
+		}
+	}
+
+	// System Memory에 있던 내용을 GPU로 갱신필요
+	// 즉 VertexBuffer에 반영 필요
+	D3D11_MAPPED_SUBRESOURCE tSub = {};
+
+	// CPU - GPU 연결
+	CONTEXT->Map(g_VB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tSub);
+	memcpy(tSub.pData, g_arrVtx, sizeof(Vtx) * 3);
+	// CPU - GPU 연결 해제
+	CONTEXT->Unmap(g_VB.Get(), 0);
 }
 
 void TempRender()
