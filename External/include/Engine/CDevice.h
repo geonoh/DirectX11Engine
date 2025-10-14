@@ -39,5 +39,7 @@ private:
 private:
 	CDevice();
 	CDevice(const CDevice& other) = delete;
+
+	static constexpr float MAX_DEPTH_VALUE = 1.f;
 };
 

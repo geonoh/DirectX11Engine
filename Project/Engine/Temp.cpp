@@ -232,4 +232,23 @@ void TempTick()
 
 void TempRender()
 {
+	const UINT Stride = sizeof(Vtx);
+	const UINT Offset = 0;
+	CONTEXT->IASetVertexBuffers(
+		0,
+		1,
+		g_VB.GetAddressOf(),
+		&Stride,
+		&Offset);
+	CONTEXT->IASetInputLayout(g_Layout.Get());
+
+	// IA에 보낸 버텍스는 삼각형단위로 묶어서 내부를 칠해라 라는 뜻
+	CONTEXT->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	CONTEXT->VSSetShader(g_VS.Get(), nullptr, 0);
+	CONTEXT->PSSetShader(g_PS.Get(), nullptr, 0);
+
+	// Draw 하기 전에 세팅만 되면
+	// 위에 저 세팅 순서는 상관없다!!
+	CONTEXT->Draw(3, 0);
 }

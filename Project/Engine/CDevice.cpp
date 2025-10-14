@@ -55,7 +55,7 @@ int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
 
 	// DepthStencil buffer texture 깊이의 범위를 0에서 1로 한다는 의미
 	viewport.MinDepth = 0;
-	viewport.MaxDepth = 1;
+	viewport.MaxDepth = MAX_DEPTH_VALUE;
 
 	// Viewport 정보 세팅
 	m_Context->RSSetViewports(1, &viewport);
@@ -66,6 +66,11 @@ int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
 void CDevice::ClearTarget(float(& _arrColor)[4])
 {
 	m_Context->ClearRenderTargetView(m_RTV.Get(), _arrColor);
+
+	// DepthStencil buffer는 가장 큰 값으로 초기화 해야한다. *MAX_DEPTH_VALUE
+	// -> TempInit에서 삼각형의 Depth가 0이다.
+	// 왜냐하면 더 작은 Depth에 있는것을 그리기 때문에
+	m_Context->ClearDepthStencilView(m_DSV.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, MAX_DEPTH_VALUE, 0.f);
 }
 
 void CDevice::Present()
