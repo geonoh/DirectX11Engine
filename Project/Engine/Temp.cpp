@@ -63,6 +63,8 @@ ComPtr<ID3D11VertexShader> g_VS; // 저장된 쉐이더 코드를 이용해서 VS생성
 ComPtr<ID3DBlob> g_PSBlob; // 컴파일 한 쉐이더 코드를 저장시키는 용도
 ComPtr<ID3D11PixelShader> g_PS; // 저장된 쉐이더 코드를 이용해서 PS생성
 
+ComPtr<ID3DBlob> g_ErrBlob; // 에러 메시지 저장용
+
 int TempInit()
 {
 	//   0
@@ -103,6 +105,55 @@ int TempInit()
 	}
 
 	// 버텍스 쉐이더 만들기
+	wchar_t szBuffer[255] = {};
+	GetCurrentDirectory(255, szBuffer);
+	size_t len = wcslen(szBuffer);
+
+	// 하나의 디렉토리 앞 폴더로 이동
+	for (int i = len - 1; i > 0; --i)
+	{
+		if (szBuffer[i] == '\\')
+		{
+			szBuffer[i] = '\0';
+			break;
+		}
+	}
+
+	wcscat_s(szBuffer, L"\\content\\shader\\std2d.fx");
+
+	if (FAILED(D3DCompileFromFile(
+		szBuffer,
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		"VS_Std2D",
+		"vs_5_0",
+		D3DCOMPILE_DEBUG,
+		0,
+		g_VSBlob.GetAddressOf(),
+		g_ErrBlob.GetAddressOf())))
+	{
+		if (nullptr != g_ErrBlob)
+		{
+			// 문법 오류
+			MessageBoxA(nullptr, (char*)g_ErrBlob->GetBufferPointer(), "버텍스 쉐이더 컴파일 오류", MB_OK);
+			return E_FAIL;
+		}
+		else
+		{
+			// 경로 오류
+			MessageBox(nullptr, L"파일을 찾을 수 없습니다.", L"버텍스 쉐이더 컴파일 오류", MB_OK);
+			return E_FAIL;
+		}
+	}
+
+	if (FAILED(DEVICE->CreateVertexShader(
+		g_VSBlob->GetBufferPointer(), 
+		g_VSBlob->GetBufferSize(),
+		nullptr, 
+		g_VS.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
 
 	// 정점 레이아웃 정보 만들기 (즉, Vtx의 구조)
 	D3D11_INPUT_ELEMENT_DESC LayoutDesc[2] = {};
@@ -121,11 +172,53 @@ int TempInit()
 	LayoutDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	LayoutDesc[1].InstanceDataStepRate = 0;
 	LayoutDesc[1].SemanticName = "COLOR";
-	LayoutDesc[1].SemanticIndex = 1;
+	LayoutDesc[1].SemanticIndex = 0;
 
+	if (FAILED(DEVICE->CreateInputLayout(
+		LayoutDesc,
+		2,
+		g_VSBlob->GetBufferPointer(),
+		g_VSBlob->GetBufferSize(),
+		g_Layout.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
 
-	//DEVICE->CreateInputLayout(LayoutDesc, 2, );
+	// 픽셀 쉐이더
+	if (FAILED(D3DCompileFromFile(
+		szBuffer,
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		"PS_Std2D",
+		"ps_5_0",
+		D3DCOMPILE_DEBUG,
+		0,
+		g_PSBlob.GetAddressOf(),
+		g_ErrBlob.GetAddressOf())))
+	{
+		if (nullptr != g_ErrBlob)
+		{
+			// 문법 오류
+			MessageBoxA(nullptr, (char*)g_ErrBlob->GetBufferPointer(), "픽셀 쉐이더 컴파일 오류", MB_OK);
+			return E_FAIL;
+		}
+		else
+		{
+			// 경로 오류
+			MessageBox(nullptr, L"파일을 찾을 수 없습니다.", L"픽셀 쉐이더 컴파일 오류", MB_OK);
+			return E_FAIL;
+		}
+	}
 
+	if (FAILED(DEVICE->CreatePixelShader(
+		g_PSBlob->GetBufferPointer(),
+		g_PSBlob->GetBufferSize(),
+		nullptr,
+		g_PS.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
+	
 	return S_OK;
 }
 
