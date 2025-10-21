@@ -9,6 +9,7 @@ private:
 	POINT m_Resolution;
 
 public:
+	HWND GetMainWnd() { return m_hMainHwnd; }
 	int Init(HWND _hWnd, POINT _Resolution);
 	void Progress();
 };

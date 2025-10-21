@@ -26,6 +26,18 @@
     <Filter Include="HLSL\2D">
       <UniqueIdentifier>{86780a16-636b-4c02-9416-99480ca7a38a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Manager">
+      <UniqueIdentifier>{6ec180df-10f5-4f48-8991-e4f4e0bc3561}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Manager\01.TimeMgr">
+      <UniqueIdentifier>{c25b740e-0b53-414b-a980-4e813ba0d21f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Manager\02.PathMgr">
+      <UniqueIdentifier>{956a8795-8569-4abd-b0c0-8b7f20715833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Manager\03.KeyMgr">
+      <UniqueIdentifier>{2535842d-1e3e-4669-9b7b-c029654546b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -56,6 +68,15 @@
     <ClInclude Include="CDevice.h">
       <Filter>03. Device</Filter>
     </ClInclude>
+    <ClInclude Include="CTimeMgr.h">
+      <Filter>04.Manager\01.TimeMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathMgr.h">
+      <Filter>04.Manager\02.PathMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>04.Manager\03.KeyMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -70,6 +91,15 @@
     <ClCompile Include="Temp.cpp" />
     <ClCompile Include="CDevice.cpp">
       <Filter>03. Device</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimeMgr.cpp">
+      <Filter>04.Manager\01.TimeMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathMgr.cpp">
+      <Filter>04.Manager\02.PathMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyMgr.cpp">
+      <Filter>04.Manager\03.KeyMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
