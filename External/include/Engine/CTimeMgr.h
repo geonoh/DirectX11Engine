@@ -19,5 +19,7 @@ private:
 public:
     void init();
     void tick();
+
+    float GetDeltaTime() const;
 };
 

@@ -44,3 +44,8 @@ void CTimeMgr::tick()
 		m_FrmCount = 0;
 	}
 }
+
+float CTimeMgr::GetDeltaTime() const
+{
+	return m_DT;
+}

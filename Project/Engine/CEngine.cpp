@@ -2,6 +2,7 @@
 #include "CEngine.h"
 
 #include "CDevice.h"
+#include "CKeyMgr.h"
 #include "CTimeMgr.h"
 
 #include "Temp.h"
@@ -36,6 +37,7 @@ int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
 
 	// Manager Init
 	CTimeMgr::GetInst()->init();
+	CKeyMgr::GetInst()->init();
 
 	if (FAILED(TempInit()))
 	{
@@ -50,6 +52,7 @@ void CEngine::Progress()
 {
 	// Manager Tick
 	CTimeMgr::GetInst()->tick();
+	CKeyMgr::GetInst()->tick();
 
 	// Object Tick
 	TempTick();

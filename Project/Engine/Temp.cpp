@@ -2,6 +2,8 @@
 #include "Temp.h"
 
 #include "CDevice.h"
+#include "CKeyMgr.h"
+#include "CTimeMgr.h"
 
 // Graphics Pipeline
 
@@ -230,32 +232,34 @@ void TempRelease()
 
 void TempTick()
 {
-	if (GetAsyncKeyState('W') & 0x8001)
+	const float DT = CTimeMgr::GetInst()->GetDeltaTime();
+
+	if (KEY_PRESSED(KEY::W))
 	{
 		for (Vtx& vertex : g_arrVtx)
 		{
-			vertex.vPos.y += 0.001f;
+			vertex.vPos.y += 1.f * DT;
 		}
 	}
-	if (GetAsyncKeyState('S') & 0x8001)
+	if (KEY_PRESSED(KEY::S))
 	{
 		for (Vtx& vertex : g_arrVtx)
 		{
-			vertex.vPos.y -= 0.001f;
+			vertex.vPos.y -= 1.f * DT;
 		}
 	}
-	if (GetAsyncKeyState('A') & 0x8001)
+	if (KEY_PRESSED(KEY::A))
 	{
 		for (Vtx& vertex : g_arrVtx)
 		{
-			vertex.vPos.x -= 0.001f;
+			vertex.vPos.x -= 1.f * DT;
 		}
 	}
-	if (GetAsyncKeyState('D') & 0x8001)
+	if (KEY_PRESSED(KEY::D))
 	{
 		for (Vtx& vertex : g_arrVtx)
 		{
-			vertex.vPos.x += 0.001f;
+			vertex.vPos.x += 1.f * DT;
 		}
 	}
 
