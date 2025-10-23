@@ -3,6 +3,7 @@
 
 #include "CDevice.h"
 #include "CKeyMgr.h"
+#include "CPathMgr.h"
 #include "CTimeMgr.h"
 
 // Graphics Pipeline
@@ -131,25 +132,12 @@ int TempInit()
 	}
 
 
-	// 버텍스 쉐이더 만들기
-	wchar_t szBuffer[255] = {};
-	GetCurrentDirectory(255, szBuffer);
-	size_t len = wcslen(szBuffer);
-
-	// 하나의 디렉토리 앞 폴더로 이동
-	for (int i = len - 1; i > 0; --i)
-	{
-		if (szBuffer[i] == '\\')
-		{
-			szBuffer[i] = '\0';
-			break;
-		}
-	}
-
-	wcscat_s(szBuffer, L"\\content\\shader\\std2d.fx");
+	// 버텍스 쉐이더
+	wstring strPath = CPathMgr::GetInst()->GetContentPath();
+	strPath += L"shader\\std2d.fx";
 
 	if (FAILED(D3DCompileFromFile(
-		szBuffer,
+		strPath.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"VS_Std2D",
@@ -213,7 +201,7 @@ int TempInit()
 
 	// 픽셀 쉐이더
 	if (FAILED(D3DCompileFromFile(
-		szBuffer,
+		strPath.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
 		"PS_Std2D",

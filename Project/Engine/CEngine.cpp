@@ -3,6 +3,7 @@
 
 #include "CDevice.h"
 #include "CKeyMgr.h"
+#include "CPathMgr.h"
 #include "CTimeMgr.h"
 
 #include "Temp.h"
@@ -36,6 +37,7 @@ int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
 	}
 
 	// Manager Init
+	CPathMgr::GetInst()->init();
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
 
