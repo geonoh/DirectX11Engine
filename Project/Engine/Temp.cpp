@@ -49,11 +49,14 @@
 // 정점 정보를 저장하는 버퍼
 ComPtr<ID3D11Buffer> g_VB; // VertexBuffer
 
+// 정점 버퍼내에서 사용할 정점을 가리키는 인덱스 정보를 저장하는 버퍼
+ComPtr<ID3D11Buffer> g_IB; // IndexBuffer
+
 // 정점 하나를 구성하는 Layout 정보	// VertexShader에서 어떻게 데이터를 받을지.
 ComPtr<ID3D11InputLayout> g_Layout;
 
 // System Memory 정점 정보
-Vtx g_arrVtx[3] = {};
+Vtx g_arrVtx[4] = {};
 
 // HLSL : 쉐이더 버전 C++이라고 생각하면된다
 
@@ -69,27 +72,25 @@ ComPtr<ID3DBlob> g_ErrBlob; // 에러 메시지 저장용
 
 int TempInit()
 {
-	//   0
-	//  / \
-	// 2---1
+	// 0-- 1
+	// | \ |
+	// 3 --2
 
-	// Viewport에 0~1 까지 Z 뎁스를 설정했으므로, Z값은 0에서 1 사이여야함
-	// 아래 코드 참조
-	//viewport.MinDepth = 0;
-	//viewport.MaxDepth = 1;
-
-	g_arrVtx[0].vPos = Vec3(0.f, 1.f, 0.f);
+	g_arrVtx[0].vPos = Vec3(-0.5f, 0.5f, 0.f);
 	g_arrVtx[0].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
-	g_arrVtx[1].vPos = Vec3(1.f, -1.f, 0.f);
+	g_arrVtx[1].vPos = Vec3(0.5f, 0.5f, 0.f);
 	g_arrVtx[1].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
-	g_arrVtx[2].vPos = Vec3(-1.f, -1.f, 0.f);
+	g_arrVtx[2].vPos = Vec3(0.5f, -0.5f, 0.f);
 	g_arrVtx[2].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+
+	g_arrVtx[3].vPos = Vec3(-0.5f, -0.5f, 0.f);
+	g_arrVtx[3].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
 	// 정점 버퍼 생성
 	D3D11_BUFFER_DESC VBDesc = {};
-	VBDesc.ByteWidth = sizeof(Vtx) * 3;
+	VBDesc.ByteWidth = sizeof(Vtx) * 4;
 	VBDesc.MiscFlags = 0;
 
 	VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -107,6 +108,28 @@ int TempInit()
 	{
 		return E_FAIL;
 	}
+
+	// 인덱스 버퍼 생성
+	UINT arrIdx[6] = { 0,2,3,0,1,2 };
+	D3D11_BUFFER_DESC IBDesc = {};
+
+	IBDesc.ByteWidth = sizeof(UINT) * 6;
+	IBDesc.MiscFlags = 0;
+
+	IBDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+
+	// 한 번 생성한 이후에, 읽기 쓰기 불가능
+	IBDesc.CPUAccessFlags = 0;
+	IBDesc.Usage = D3D11_USAGE_DEFAULT;
+
+	D3D11_SUBRESOURCE_DATA IbSubDesc = {};
+	IbSubDesc.pSysMem = arrIdx;
+
+	if (FAILED(DEVICE->CreateBuffer(&IBDesc, &IbSubDesc, g_IB.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
+
 
 	// 버텍스 쉐이더 만들기
 	wchar_t szBuffer[255] = {};
@@ -269,7 +292,7 @@ void TempTick()
 
 	// CPU - GPU 연결
 	CONTEXT->Map(g_VB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tSub);
-	memcpy(tSub.pData, g_arrVtx, sizeof(Vtx) * 3);
+	memcpy(tSub.pData, g_arrVtx, sizeof(Vtx) * 4);
 	// CPU - GPU 연결 해제
 	CONTEXT->Unmap(g_VB.Get(), 0);
 }
@@ -284,6 +307,7 @@ void TempRender()
 		g_VB.GetAddressOf(),
 		&Stride,
 		&Offset);
+	CONTEXT->IASetIndexBuffer(g_IB.Get(), DXGI_FORMAT_R32_UINT/*4바이트 포멧*/, 0);
 	CONTEXT->IASetInputLayout(g_Layout.Get());
 
 	// IA에 보낸 버텍스는 삼각형단위로 묶어서 내부를 칠해라 라는 뜻
@@ -292,7 +316,5 @@ void TempRender()
 	CONTEXT->VSSetShader(g_VS.Get(), nullptr, 0);
 	CONTEXT->PSSetShader(g_PS.Get(), nullptr, 0);
 
-	// Draw 하기 전에 세팅만 되면
-	// 위에 저 세팅 순서는 상관없다!!
-	CONTEXT->Draw(3, 0);
+	CONTEXT->DrawIndexed(6, 0, 0);
 }
