@@ -1,6 +1,11 @@
 #ifndef _STD2D // Pragma once와 같은 효과
 #define _STD2D
 
+cbuffer TRANSFORM : register(b0)
+{
+    float4 g_Position;
+}
+
 struct VS_IN
 {
 	// 의도하는게 POSITION + Semantic Index가 0
@@ -20,7 +25,7 @@ struct VS_OUT
 VS_OUT VS_Std2D(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0.f;
-    output.vPosition = float4(_in.vPos, 1.f);
+    output.vPosition = float4(_in.vPos + g_Position.xyz, 1.f);
     return output;
 }
 

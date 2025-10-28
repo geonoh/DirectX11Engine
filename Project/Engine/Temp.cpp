@@ -53,11 +53,17 @@ ComPtr<ID3D11Buffer> g_VB; // VertexBuffer
 // 정점 버퍼내에서 사용할 정점을 가리키는 인덱스 정보를 저장하는 버퍼
 ComPtr<ID3D11Buffer> g_IB; // IndexBuffer
 
+// 상수버퍼(Constant Buffer) - 물체의 위치, 크기, 회전
+ComPtr<ID3D11Buffer> g_CB;
+
 // 정점 하나를 구성하는 Layout 정보	// VertexShader에서 어떻게 데이터를 받을지.
 ComPtr<ID3D11InputLayout> g_Layout;
 
 // System Memory 정점 정보
 Vtx g_arrVtx[4] = {};
+
+// 물체의 위치값
+Vec3 g_ObjectPos;
 
 // HLSL : 쉐이더 버전 C++이라고 생각하면된다
 
@@ -131,6 +137,21 @@ int TempInit()
 		return E_FAIL;
 	}
 
+	// Constant Buffer
+	D3D11_BUFFER_DESC CBDesc = {};
+	CBDesc.ByteWidth = sizeof(tTransform);
+	CBDesc.MiscFlags = 0;
+
+	CBDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+	// 한 번 생성한 이후에, 읽기 쓰기 불가능
+	CBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	CBDesc.Usage = D3D11_USAGE_DYNAMIC;
+
+	if (FAILED(DEVICE->CreateBuffer(&CBDesc, nullptr, g_CB.GetAddressOf())))
+	{
+		return E_FAIL;
+	}
 
 	// 버텍스 쉐이더
 	wstring strPath = CPathMgr::GetInst()->GetContentPath();
@@ -233,7 +254,9 @@ int TempInit()
 	{
 		return E_FAIL;
 	}
-	
+
+	g_ObjectPos = Vec3(0.f, 0.f, 0.f);
+
 	return S_OK;
 }
 
@@ -247,31 +270,21 @@ void TempTick()
 
 	if (KEY_PRESSED(KEY::W))
 	{
-		for (Vtx& vertex : g_arrVtx)
-		{
-			vertex.vPos.y += 1.f * DT;
-		}
+		g_ObjectPos.y += DT;
 	}
 	if (KEY_PRESSED(KEY::S))
 	{
-		for (Vtx& vertex : g_arrVtx)
-		{
-			vertex.vPos.y -= 1.f * DT;
-		}
+		g_ObjectPos.y -= DT;
+
 	}
 	if (KEY_PRESSED(KEY::A))
 	{
-		for (Vtx& vertex : g_arrVtx)
-		{
-			vertex.vPos.x -= 1.f * DT;
-		}
+		g_ObjectPos.x -= DT;
+
 	}
 	if (KEY_PRESSED(KEY::D))
 	{
-		for (Vtx& vertex : g_arrVtx)
-		{
-			vertex.vPos.x += 1.f * DT;
-		}
+		g_ObjectPos.x += DT;
 	}
 
 	// System Memory에 있던 내용을 GPU로 갱신필요
@@ -279,10 +292,14 @@ void TempTick()
 	D3D11_MAPPED_SUBRESOURCE tSub = {};
 
 	// CPU - GPU 연결
-	CONTEXT->Map(g_VB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tSub);
-	memcpy(tSub.pData, g_arrVtx, sizeof(Vtx) * 4);
+	CONTEXT->Map(g_CB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tSub);
+	tTransform trans={};
+	trans.Position = g_ObjectPos;
+	memcpy(tSub.pData, &trans, sizeof(tTransform));
 	// CPU - GPU 연결 해제
-	CONTEXT->Unmap(g_VB.Get(), 0);
+	CONTEXT->Unmap(g_CB.Get(), 0);
+
+	CONTEXT->VSSetConstantBuffers(0, 1, g_CB.GetAddressOf());
 }
 
 void TempRender()
