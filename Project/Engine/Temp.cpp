@@ -93,7 +93,7 @@ int TempInit()
 	g_arrVtx[2].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
 
 	g_arrVtx[3].vPos = Vec3(-0.5f, -0.5f, 0.f);
-	g_arrVtx[3].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	g_arrVtx[3].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 
 	// 정점 버퍼 생성
 	D3D11_BUFFER_DESC VBDesc = {};
@@ -195,7 +195,7 @@ int TempInit()
 	D3D11_INPUT_ELEMENT_DESC LayoutDesc[2] = {};
 
 	LayoutDesc[0].AlignedByteOffset = 0;
-	LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;// Vec3과 맞는 사이즈 강제로 맞춤;;; (픽셀 포멧)
+	LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;// Vec3과 맞는 사이즈 강제로 맞춤;;; Vtx::vPos
 	LayoutDesc[0].InputSlot = 0;
 	LayoutDesc[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	LayoutDesc[0].InstanceDataStepRate = 0;
@@ -203,7 +203,7 @@ int TempInit()
 	LayoutDesc[0].SemanticIndex = 0;
 
 	LayoutDesc[1].AlignedByteOffset = 12;
-	LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;// Vec3과 맞는 사이즈 강제로 맞춤;;; (픽셀 포멧)
+	LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;// Vec4과 맞는 사이즈 강제로 맞춤, Vtx::vColor
 	LayoutDesc[1].InputSlot = 0;
 	LayoutDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	LayoutDesc[1].InstanceDataStepRate = 0;
