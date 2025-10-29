@@ -26,17 +26,47 @@
     <Filter Include="HLSL\2D">
       <UniqueIdentifier>{86780a16-636b-4c02-9416-99480ca7a38a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Manager">
+    <Filter Include="04. Manager">
       <UniqueIdentifier>{6ec180df-10f5-4f48-8991-e4f4e0bc3561}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Manager\01.TimeMgr">
+    <Filter Include="04. Manager\01.TimeMgr">
       <UniqueIdentifier>{c25b740e-0b53-414b-a980-4e813ba0d21f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Manager\02.PathMgr">
+    <Filter Include="04. Manager\02.PathMgr">
       <UniqueIdentifier>{956a8795-8569-4abd-b0c0-8b7f20715833}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Manager\03.KeyMgr">
+    <Filter Include="04. Manager\03.KeyMgr">
       <UniqueIdentifier>{2535842d-1e3e-4669-9b7b-c029654546b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. GameObject">
+      <UniqueIdentifier>{7a9f8534-7f97-49d8-a15f-9535b36824fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component">
+      <UniqueIdentifier>{a3a7f995-086f-4ec5-bd8a-527b3bc0264d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset">
+      <UniqueIdentifier>{b8aafb7b-dbe3-449f-a75b-6ca32449d8e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\Mesh">
+      <UniqueIdentifier>{9e872065-702b-43a8-9ec4-febd6861c39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\Texture">
+      <UniqueIdentifier>{fb8b82a9-bf7d-4771-8840-566e19ba44ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\Sound">
+      <UniqueIdentifier>{700125af-ab1b-41a1-8a51-28d57cf97842}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\Material">
+      <UniqueIdentifier>{166e4334-e805-4d66-9ef0-6420d931fdf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\MeshData">
+      <UniqueIdentifier>{abe9cf69-7c07-4a0e-b499-a863f04f2987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\Prefab">
+      <UniqueIdentifier>{864bec67-28e0-4bd5-9b23-0cd25a18f918}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Asset\Shader">
+      <UniqueIdentifier>{85dd2081-02b5-489e-8c16-95287e1615c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,13 +99,31 @@
       <Filter>03. Device</Filter>
     </ClInclude>
     <ClInclude Include="CTimeMgr.h">
-      <Filter>04.Manager\01.TimeMgr</Filter>
+      <Filter>04. Manager\01.TimeMgr</Filter>
     </ClInclude>
     <ClInclude Include="CPathMgr.h">
-      <Filter>04.Manager\02.PathMgr</Filter>
+      <Filter>04. Manager\02.PathMgr</Filter>
     </ClInclude>
     <ClInclude Include="CKeyMgr.h">
-      <Filter>04.Manager\03.KeyMgr</Filter>
+      <Filter>04. Manager\03.KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CEntity.h">
+      <Filter>Module</Filter>
+    </ClInclude>
+    <ClInclude Include="CAsset.h">
+      <Filter>07. Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="CComponent.h">
+      <Filter>06. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameObject.h">
+      <Filter>05. GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CMesh.h">
+      <Filter>07. Asset\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="enum.h">
+      <Filter>01. Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,13 +141,28 @@
       <Filter>03. Device</Filter>
     </ClCompile>
     <ClCompile Include="CTimeMgr.cpp">
-      <Filter>04.Manager\01.TimeMgr</Filter>
+      <Filter>04. Manager\01.TimeMgr</Filter>
     </ClCompile>
     <ClCompile Include="CPathMgr.cpp">
-      <Filter>04.Manager\02.PathMgr</Filter>
+      <Filter>04. Manager\02.PathMgr</Filter>
     </ClCompile>
     <ClCompile Include="CKeyMgr.cpp">
-      <Filter>04.Manager\03.KeyMgr</Filter>
+      <Filter>04. Manager\03.KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CEntity.cpp">
+      <Filter>Module</Filter>
+    </ClCompile>
+    <ClCompile Include="CAsset.cpp">
+      <Filter>07. Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="CComponent.cpp">
+      <Filter>06. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameObject.cpp">
+      <Filter>05. GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="CMesh.cpp">
+      <Filter>07. Asset\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

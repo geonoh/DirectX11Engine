@@ -47,6 +47,8 @@
 // RenderTargetTexture
 // DepthStencilTexture
 
+// TODO : Mesh (VB + IB)
+
 // 정점 정보를 저장하는 버퍼
 ComPtr<ID3D11Buffer> g_VB; // VertexBuffer
 
