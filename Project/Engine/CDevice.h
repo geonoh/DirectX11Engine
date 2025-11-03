@@ -1,5 +1,7 @@
 #pragma once
 
+class CConstBuffer;
+
 class CDevice : public CSingleton<CDevice>
 {
 	SINGLE(CDevice);
@@ -18,6 +20,8 @@ private:
 	ComPtr<ID3D11Texture2D> m_DepthStencilTex;
 	ComPtr<ID3D11DepthStencilView> m_DSV;
 
+	CConstBuffer* m_CB[static_cast<UINT>(CB_TYPE::END)];
+
 public:
 	static CDevice* GetInst()
 	{
@@ -32,10 +36,12 @@ public:
 
 	ID3D11Device* GetDevice();
 	ID3D11DeviceContext* GetContext();
+	CConstBuffer* GetConstBuffer(CB_TYPE _Type);
 
 private:
 	int CreateSwapChain();
 	int CreateView();
+	int CreateConstBuffer();
 
 	static constexpr float MAX_DEPTH_VALUE = 1.f;
 };

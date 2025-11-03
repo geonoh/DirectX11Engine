@@ -12,3 +12,13 @@ enum class ASSET_TYPE
 	COMPUTE_SHADER,
 	END,
 };
+
+enum class CB_TYPE
+{
+	TRANSFORM,
+	MATERIAL,
+	ANIMATION,
+	GLOBAL,
+	END,
+
+};

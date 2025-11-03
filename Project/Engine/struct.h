@@ -11,5 +11,5 @@ struct Vtx
 struct tTransform
 {
 	Vec4 Position;
-
+	Vec4 Scale;
 };

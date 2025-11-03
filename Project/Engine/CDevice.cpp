@@ -1,8 +1,11 @@
 #include "pch.h"
 #include "CDevice.h"
 
+#include "CConstBuffer.h"
+
 CDevice::~CDevice()
 {
+	Safe_Del_Array(m_CB);
 }
 
 int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
@@ -60,6 +63,12 @@ int CDevice::Init(const HWND _hWnd, const POINT _Resolution)
 	// Viewport 정보 세팅
 	m_Context->RSSetViewports(1, &viewport);
 
+	// 필요한 상수버퍼 생성
+	if (FAILED(CreateConstBuffer()))
+	{
+		return E_FAIL;
+	}
+
 	return S_OK;
 }
 
@@ -86,6 +95,11 @@ ID3D11Device* CDevice::GetDevice()
 ID3D11DeviceContext* CDevice::GetContext()
 {
 	return m_Context.Get();
+}
+
+CConstBuffer* CDevice::GetConstBuffer(CB_TYPE _Type)
+{
+	return m_CB[static_cast<UINT>(_Type)];
 }
 
 int CDevice::CreateSwapChain()
@@ -170,6 +184,14 @@ int CDevice::CreateView()
 	return S_OK;
 }
 
-CDevice::CDevice() : m_hMainWnd(nullptr), m_RenderResolution()
+int CDevice::CreateConstBuffer()
+{
+	m_CB[static_cast<UINT>(CB_TYPE::TRANSFORM)] = new CConstBuffer;
+	m_CB[static_cast<UINT>(CB_TYPE::TRANSFORM)]->Create(sizeof(tTransform), CB_TYPE::TRANSFORM);
+
+	return S_OK;
+}
+
+CDevice::CDevice() : m_hMainWnd(nullptr), m_RenderResolution(), m_CB{}
 {
 }
