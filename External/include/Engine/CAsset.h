@@ -14,6 +14,6 @@ public:
 	ASSET_TYPE GetAssetType() const { return m_Type; }
 
     CAsset(ASSET_TYPE _Type);
-    ~CAsset();
+    virtual ~CAsset();
 };
 
