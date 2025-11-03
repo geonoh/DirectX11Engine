@@ -12,12 +12,6 @@
 CMesh* g_RectMesh = nullptr;
 CMesh* g_CircleMesh = nullptr;
 
-// 정점 정보를 저장하는 버퍼
-ComPtr<ID3D11Buffer> g_VB; // VertexBuffer
-
-// 정점 버퍼내에서 사용할 정점을 가리키는 인덱스 정보를 저장하는 버퍼
-ComPtr<ID3D11Buffer> g_IB; // IndexBuffer
-
 // 정점 하나를 구성하는 Layout 정보	// VertexShader에서 어떻게 데이터를 받을지.
 ComPtr<ID3D11InputLayout> g_Layout;
 
