@@ -34,3 +34,4 @@ using std::wstring;
 #include "enum.h"
 #include "func.h"
 #include "singleton.h"
+#include "ptr.h"

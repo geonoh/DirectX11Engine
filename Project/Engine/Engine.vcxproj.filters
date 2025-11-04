@@ -77,6 +77,9 @@
     <Filter Include="07. Asset\Shader\ComputeShader">
       <UniqueIdentifier>{a10fc5ad-fc5c-4f69-a3c4-edad1ad0f5fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager\04.AssetMgr">
+      <UniqueIdentifier>{08e6cfc3-2e86-4e57-b2f9-092d55684e9d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -149,6 +152,12 @@
     <ClInclude Include="CComputeShader.h">
       <Filter>07. Asset\Shader\ComputeShader</Filter>
     </ClInclude>
+    <ClInclude Include="ptr.h">
+      <Filter>07. Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="CAssetMgr.h">
+      <Filter>04. Manager\04.AssetMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -199,6 +208,12 @@
     </ClCompile>
     <ClCompile Include="CComputeShader.cpp">
       <Filter>07. Asset\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="CAssetMgr.cpp">
+      <Filter>04. Manager\04.AssetMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CAssetMgr_Init.cpp">
+      <Filter>04. Manager\04.AssetMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,10 @@ private:
     wstring m_Key; // 본인이 로딩된 키 값
     wstring m_RelativePath; // 상대경로
     const ASSET_TYPE m_Type;
+    int m_RefCount;
+
+    void AddRef();
+    void Release();
 
 public:
     const wstring& GetKey() const { return m_Key; }
@@ -14,6 +18,10 @@ public:
 	ASSET_TYPE GetAssetType() const { return m_Type; }
 
     CAsset(ASSET_TYPE _Type);
-    virtual ~CAsset();
+    CAsset(const CAsset& _Other) = delete;
+    virtual ~CAsset() override;
+
+    template<typename T>
+    friend class Ptr;
 };
 

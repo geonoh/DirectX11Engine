@@ -8,10 +8,11 @@
 #include "CPathMgr.h"
 #include "CTimeMgr.h"
 #include "CMesh.h"
+#include "ptr.h"
 
 // Mesh
-CMesh* g_RectMesh = nullptr;
-CMesh* g_CircleMesh = nullptr;
+Ptr<CMesh> g_RectMesh = nullptr;
+Ptr<CMesh> g_CircleMesh = nullptr;
 
 // System Memory 정점 정보
 Vtx g_arrVtx[4] = {};
@@ -20,7 +21,7 @@ Vtx g_arrVtx[4] = {};
 tTransform g_Trans = {};
 
 // HLSL : 쉐이더 버전 C++이라고 생각하면된다
-CGraphicShader* g_Shader = nullptr;
+Ptr<CGraphicShader> g_Shader = nullptr;
 
 int TempInit()
 {
@@ -94,23 +95,23 @@ int TempInit()
 
 void TempRelease()
 {
-	if (g_RectMesh)
-	{
-		delete g_RectMesh;
-		g_RectMesh = nullptr;
-	}
-
-	if (g_CircleMesh)
-	{
-		delete g_CircleMesh;
-		g_CircleMesh = nullptr;
-	}
-
-	if (g_Shader)
-	{
-		delete g_Shader;
-		g_Shader = nullptr;
-	}
+	//if (g_RectMesh)
+	//{
+	//	delete g_RectMesh;
+	//	g_RectMesh = nullptr;
+	//}
+	//
+	//if (g_CircleMesh)
+	//{
+	//	delete g_CircleMesh;
+	//	g_CircleMesh = nullptr;
+	//}
+	//
+	//if (g_Shader)
+	//{
+	//	delete g_Shader;
+	//	g_Shader = nullptr;
+	//}
 }
 
 void TempTick()

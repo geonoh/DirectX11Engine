@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CEngine.h"
 
+#include "CAssetMgr.h"
 #include "CDevice.h"
 #include "CKeyMgr.h"
 #include "CPathMgr.h"
@@ -40,6 +41,7 @@ int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
 	CPathMgr::GetInst()->init();
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
+	CAssetMgr::GetInst()->init();
 
 	if (FAILED(TempInit()))
 	{

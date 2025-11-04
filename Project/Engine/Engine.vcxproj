@@ -153,6 +153,7 @@ call Copy.bat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAsset.h" />
+    <ClInclude Include="CAssetMgr.h" />
     <ClInclude Include="CComponent.h" />
     <ClInclude Include="CComputeShader.h" />
     <ClInclude Include="CConstBuffer.h" />
@@ -172,6 +173,7 @@ call Copy.bat
     <ClInclude Include="func.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ptr.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="singleton.h" />
     <ClInclude Include="struct.h" />
@@ -179,6 +181,8 @@ call Copy.bat
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAsset.cpp" />
+    <ClCompile Include="CAssetMgr.cpp" />
+    <ClCompile Include="CAssetMgr_Init.cpp" />
     <ClCompile Include="CComponent.cpp" />
     <ClCompile Include="CComputeShader.cpp" />
     <ClCompile Include="CConstBuffer.cpp" />
