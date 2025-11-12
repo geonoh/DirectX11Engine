@@ -23,5 +23,7 @@ public:
 
     template<typename T>
     friend class Ptr;
+
+    friend class CAssetMgr;
 };
 

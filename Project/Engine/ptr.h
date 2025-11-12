@@ -8,6 +8,7 @@ private:
 
 public:
 	T* Get() { return m_Asset; }
+	T** GetAddressOf() { return &m_Asset; }
 
 public:
 	void operator = (T* _Asset)

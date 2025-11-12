@@ -158,6 +158,12 @@
     <ClInclude Include="CAssetMgr.h">
       <Filter>04. Manager\04.AssetMgr</Filter>
     </ClInclude>
+    <ClInclude Include="components.h">
+      <Filter>01. Header</Filter>
+    </ClInclude>
+    <ClInclude Include="assets.h">
+      <Filter>01. Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
