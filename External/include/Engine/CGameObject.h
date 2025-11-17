@@ -1,7 +1,14 @@
 #pragma once
 #include "CEntity.h"
-class CGameObject :
-    public CEntity
+
+class CComponent;
+
+class CGameObject : public CEntity
 {
+private:
+	CComponent* m_arrCom[static_cast<UINT>(COMPONENT_TYPE::END)];
+
+public:
+
 };
 

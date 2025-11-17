@@ -22,27 +22,21 @@ public:
     Ptr<T> FindAsset(const wstring& _strKey);
 
     template<typename T>
-    void AddAsset(const wstring& _strKey, T* pAsset);
+    void AddAsset(const wstring& _strKey, Ptr<T> pAsset);
 };
-
-// 변수 템플릿
-template<typename T1, typename T2>
-constexpr bool myBool = false;
-template<typename T1> // 부분 특수화;;
-constexpr bool myBool<T1, T1> = true; // 템플릿 변수 두개 받으면 무조건 false인데, 그 둘이 같으면 true
 
 template<typename T>
 ASSET_TYPE GetAssetType()
 {
-	if constexpr (myBool<T, CMesh>)
+	if constexpr (std::is_same_v<T, CMesh>)
     {
         return ASSET_TYPE::MESH;
     }
-    if constexpr (myBool<T, CComputeShader>)
+    if constexpr (std::is_same_v<T, CComputeShader>)
     {
         return ASSET_TYPE::COMPUTE_SHADER;
     }
-    if constexpr (myBool<T, CGraphicShader>)
+    if constexpr (std::is_same_v<T, CGraphicShader>)
     {
         return ASSET_TYPE::GRAPHICS_SHADER;
     }
@@ -67,12 +61,12 @@ Ptr<T> CAssetMgr::FindAsset(const wstring& _strKey)
 }
 
 template <typename T>
-void CAssetMgr::AddAsset(const wstring& _strKey, T* _pAsset)
+void CAssetMgr::AddAsset(const wstring& _strKey, Ptr<T> _pAsset)
 {
     Ptr<T> pFoundAsset = FindAsset<T>(_strKey);
     assert(pFoundAsset.Get() == nullptr);
 
     const ASSET_TYPE type = GetAssetType<T>();
-    m_mapAsset[static_cast<UINT>(type)].insert(make_pair(_strKey, _pAsset));
+    m_mapAsset[static_cast<UINT>(type)].insert(make_pair(_strKey, _pAsset.Get()));
     _pAsset->m_Key = _strKey;
 }

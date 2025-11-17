@@ -14,18 +14,8 @@
 // 물체의 위치, 크기, 회전
 tTransform g_Trans = {};
 
-// HLSL : 쉐이더 버전 C++이라고 생각하면된다
-Ptr<CGraphicShader> g_Shader = nullptr;
-
 int TempInit()
 {
-	wstring strPath = CPathMgr::GetInst()->GetContentPath();
-	strPath += L"shader\\std2d.fx";
-
-	g_Shader = new CGraphicShader;
-	g_Shader->CreateVertexShader(strPath, "VS_Std2D");
-	g_Shader->CreatePixelShader(strPath, "PS_Std2D");
-
 	return S_OK;
 }
 
@@ -80,7 +70,8 @@ void TempTick()
 
 void TempRender()
 {
-	g_Shader->Binding();
+	Ptr<CGraphicShader> pShader = CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader");
+	pShader->Binding();
 
 	Ptr<CMesh> pRectMesh = CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh");
 	if (pRectMesh.Get())

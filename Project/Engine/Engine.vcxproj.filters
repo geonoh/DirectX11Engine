@@ -80,6 +80,54 @@
     <Filter Include="04. Manager\04.AssetMgr">
       <UniqueIdentifier>{08e6cfc3-2e86-4e57-b2f9-092d55684e9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="06. Component\01. Transform">
+      <UniqueIdentifier>{929aa92d-58e0-4c9c-a75b-09de669c7942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\02. Camera">
+      <UniqueIdentifier>{a0acdb88-35b0-498e-ba7d-e547a7144825}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\03. Collider2D">
+      <UniqueIdentifier>{ce3126c2-0fe7-42b0-9366-98060e5aef52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\04. Collider3D">
+      <UniqueIdentifier>{e2540c18-1865-4c5c-ad67-e0e2b816edb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\05. Animator2D">
+      <UniqueIdentifier>{c4771f3c-8781-4acd-8068-86ac36f6d7bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\06. Animator3D">
+      <UniqueIdentifier>{ffb4a59a-1c5c-4a05-bced-60f3e4c19bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering">
+      <UniqueIdentifier>{54e3b87e-61d9-49ce-9f25-ccd3d643d1f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering\MeshRender">
+      <UniqueIdentifier>{d0cb57cc-3599-4ccd-9f92-ea778549f53f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering\TileMap">
+      <UniqueIdentifier>{e0b54f0c-a282-454f-b6a8-1c4acea42322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering\ParticleSystem">
+      <UniqueIdentifier>{1e989fce-7c98-4615-b29f-fa16f7cc85a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\07. Light2D">
+      <UniqueIdentifier>{dfa4d7ab-dcbf-489c-ba32-21702bba974f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\08. Light3D">
+      <UniqueIdentifier>{f1dbcdca-9a5b-44a9-a0f2-d715f978b4eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering\SkyBox">
+      <UniqueIdentifier>{84f1c391-8e1f-4572-b757-db555584a29b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering\Decal">
+      <UniqueIdentifier>{66dcb11e-0ddc-4f98-b600-84440d51f546}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Rendering\LandScape">
+      <UniqueIdentifier>{3fa15dbe-96bd-4e9f-8e4d-7cdc3826feff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Component\Script">
+      <UniqueIdentifier>{0f8429c4-b148-4536-8789-19638fccaf73}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -125,9 +173,6 @@
     <ClInclude Include="CAsset.h">
       <Filter>07. Asset</Filter>
     </ClInclude>
-    <ClInclude Include="CComponent.h">
-      <Filter>06. Component</Filter>
-    </ClInclude>
     <ClInclude Include="CGameObject.h">
       <Filter>05. GameObject</Filter>
     </ClInclude>
@@ -164,6 +209,15 @@
     <ClInclude Include="assets.h">
       <Filter>01. Header</Filter>
     </ClInclude>
+    <ClInclude Include="CComponent.h">
+      <Filter>06. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="CRenderComponent.h">
+      <Filter>06. Component\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="CTransform.h">
+      <Filter>06. Component\01. Transform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -194,9 +248,6 @@
     <ClCompile Include="CAsset.cpp">
       <Filter>07. Asset</Filter>
     </ClCompile>
-    <ClCompile Include="CComponent.cpp">
-      <Filter>06. Component</Filter>
-    </ClCompile>
     <ClCompile Include="CGameObject.cpp">
       <Filter>05. GameObject</Filter>
     </ClCompile>
@@ -220,6 +271,15 @@
     </ClCompile>
     <ClCompile Include="CAssetMgr_Init.cpp">
       <Filter>04. Manager\04.AssetMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CComponent.cpp">
+      <Filter>06. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="CRenderComponent.cpp">
+      <Filter>06. Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="CTransform.cpp">
+      <Filter>06. Component\01. Transform</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
