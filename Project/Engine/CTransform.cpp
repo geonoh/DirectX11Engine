@@ -4,23 +4,23 @@
 #include "CConstBuffer.h"
 #include "CDevice.h"
 
-void CTransform::finaltick()
+void CTransform::FinalTick()
 {
 }
 
-void CTransform::Binding()
+void CTransform::Binding() const
 {
-	CConstBuffer* pCB = CDevice::GetInst()->GetConstBuffer(CB_TYPE::TRANSFORM);
+	CConstBuffer* ConstBuffer = CDevice::GetInst()->GetConstBuffer(EConstantBufferType::Transform);
 	tTransform trans = {};
-	trans.Position = m_RelativePos;
-	trans.Scale = m_RelativeScale;
+	trans.Position = RelativePos;
+	trans.Scale = RelativeScale;
 
-	pCB->SetData(&trans);
-	pCB->Binding();
+	ConstBuffer->SetData(&trans);
+	ConstBuffer->Binding();
 }
 
 CTransform::CTransform()
-	: CComponent(COMPONENT_TYPE::TRANSFORM), m_RelativeScale(1.f, 1.f, 1.f)
+	: CComponent(EComponentType::Transform), RelativeScale(1.f, 1.f, 1.f)
 {
 }
 

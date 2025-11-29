@@ -7,36 +7,36 @@ class CDevice : public CSingleton<CDevice>
 	SINGLE(CDevice);
 
 private:
-	HWND m_hMainWnd;
-	POINT m_RenderResolution;
+	HWND MainHwnd;
+	POINT RenderResolution;
 
-	ComPtr<ID3D11Device> m_Device;	// GPU 메모리 할당, Dx11 관련 객체 생성
-	ComPtr<ID3D11DeviceContext> m_Context; // GPU 랜더링 관련 명령
+	ComPtr<ID3D11Device> Device;	// GPU 메모리 할당, Dx11 관련 객체 생성
+	ComPtr<ID3D11DeviceContext> DeviceContext; // GPU 랜더링 관련 명령
 
-	ComPtr<IDXGISwapChain> m_SwapChain; // 렌던타켓 버퍼 소유, 화면에 최종 장면을 게시
-	ComPtr<ID3D11Texture2D> m_RenderTargetTex;
-	ComPtr<ID3D11RenderTargetView> m_RTV;
+	ComPtr<IDXGISwapChain> SwapChain; // 렌던타켓 버퍼 소유, 화면에 최종 장면을 게시
+	ComPtr<ID3D11Texture2D> RenderTargetTexture;
+	ComPtr<ID3D11RenderTargetView> RenderTargetView;
 
-	ComPtr<ID3D11Texture2D> m_DepthStencilTex;
-	ComPtr<ID3D11DepthStencilView> m_DSV;
+	ComPtr<ID3D11Texture2D> DepthStencilTexture;
+	ComPtr<ID3D11DepthStencilView> DepthStencilView;
 
-	CConstBuffer* m_CB[static_cast<UINT>(CB_TYPE::END)];
+	CConstBuffer* ConstantBuffer[static_cast<UINT>(EConstantBufferType::End)];
 
 public:
 	static CDevice* GetInst()
 	{
-		static CDevice device;
-		return &device;
+		static CDevice Device;
+		return &Device;
 	}
 
 public:
-	int Init(HWND _hWnd, POINT _Resolution);
-	void ClearTarget(float(&_arrColor)[4]);
-	void Present();
+	int Init(HWND HWnd, POINT Resolution);
+	void ClearTarget(const float(&ArrColor)[4]) const;
+	void Present() const;
 
-	ID3D11Device* GetDevice();
-	ID3D11DeviceContext* GetContext();
-	CConstBuffer* GetConstBuffer(CB_TYPE _Type);
+	ID3D11Device* GetDevice() const;
+	ID3D11DeviceContext* GetContext() const;
+	CConstBuffer* GetConstBuffer(EConstantBufferType Type) const;
 
 private:
 	int CreateSwapChain();

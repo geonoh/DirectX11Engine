@@ -1,19 +1,19 @@
 #pragma once
 #include "CEntity.h"
 
-class CConstBuffer :
-    public CEntity
+class CConstBuffer final :
+	public CEntity
 {
 public:
 	CConstBuffer();
-    ~CConstBuffer();
+	virtual ~CConstBuffer() override;
 
-    int Create(size_t _bufferSize, CB_TYPE _Type);
-    void SetData(void* _pData);
-    void Binding();
+	int Create(size_t BufferSize, EConstantBufferType Type);
+	void SetData(const void* Data) const;
+	void Binding();
 
 private:
-    ComPtr<ID3D11Buffer> m_CB;
-    D3D11_BUFFER_DESC m_Desc;
-    CB_TYPE m_Type;
+	ComPtr<ID3D11Buffer> ConstantBuffer;
+	D3D11_BUFFER_DESC Desc;
+	EConstantBufferType ConstantBufferType;
 };

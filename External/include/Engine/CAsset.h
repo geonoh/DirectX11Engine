@@ -4,21 +4,21 @@ class CAsset :
     public CEntity
 {
 private:
-    wstring m_Key; // 본인이 로딩된 키 값
-    wstring m_RelativePath; // 상대경로
-    const ASSET_TYPE m_Type;
-    int m_RefCount;
+    wstring Key; // 본인이 로딩된 키 값
+    wstring RelativePath; // 상대경로
+    const EAssetType Type;
+    int ReferenceCount;
 
     void AddRef();
     void Release();
 
 public:
-    const wstring& GetKey() const { return m_Key; }
-	const wstring& GetRelativePath() const { return m_RelativePath; }
-	ASSET_TYPE GetAssetType() const { return m_Type; }
+    const wstring& GetKey() const { return Key; }
+    const wstring& GetRelativePath() const { return RelativePath; }
+	EAssetType GetAssetType() const { return Type; }
 
-    CAsset(ASSET_TYPE _Type);
-    CAsset(const CAsset& _Other) = delete;
+    CAsset(EAssetType Type);
+    CAsset(const CAsset& Other) = delete;
     virtual ~CAsset() override;
 
     template<typename T>

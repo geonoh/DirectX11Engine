@@ -15,37 +15,37 @@ CEngine::~CEngine()
 }
 
 CEngine::CEngine()
-	: m_hMainHwnd(nullptr)
-	  , m_Resolution{}
+	: MainHwnd(nullptr)
+	  , Resolution{}
 {
 }
 
-int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
+int CEngine::Init(const HWND InHwnd, const POINT InResolution)
 {
-	m_hMainHwnd = _hWnd;
-	m_Resolution = _Resolution;
+	MainHwnd = InHwnd;
+	Resolution = InResolution;
 
 	// 윈도우 크기 설정
-	RECT rt = {0, 0, m_Resolution.x, m_Resolution.y};
-	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
-	SetWindowPos(m_hMainHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
+	RECT Rect = {0, 0, Resolution.x, Resolution.y};
+	AdjustWindowRect(&Rect, WS_OVERLAPPEDWINDOW, false);
+	SetWindowPos(MainHwnd, nullptr, 0, 0, Rect.right - Rect.left, Rect.bottom - Rect.top, 0);
 
 	// DirectX11
-	if (FAILED(CDevice::GetInst()->Init(_hWnd, _Resolution)))
+	if (FAILED(CDevice::GetInst()->Init(InHwnd, InResolution)))
 	{
-		MessageBox(m_hMainHwnd, L"Device 초기화 실패", L"Device 초기화 실패", MB_OK);
+		MessageBox(MainHwnd, L"Device 초기화 실패", L"Device 초기화 실패", MB_OK);
 		return E_FAIL;
 	}
 
 	// Manager Init
-	CPathMgr::GetInst()->init();
-	CTimeMgr::GetInst()->init();
-	CKeyMgr::GetInst()->init();
+	CPathMgr::GetInst()->Init();
+	CTimeMgr::GetInst()->Init();
+	CKeyMgr::GetInst()->Init();
 	CAssetMgr::GetInst()->init();
 
 	if (FAILED(TempInit()))
 	{
-		MessageBox(m_hMainHwnd, L"Device 초기화 실패", L"TempInit 초기화 실패", MB_OK);
+		MessageBox(MainHwnd, L"Device 초기화 실패", L"TempInit 초기화 실패", MB_OK);
 		return E_FAIL;
 	}
 
@@ -55,15 +55,15 @@ int CEngine::Init(const HWND _hWnd, const POINT _Resolution)
 void CEngine::Progress()
 {
 	// Manager Tick
-	CTimeMgr::GetInst()->tick();
-	CKeyMgr::GetInst()->tick();
+	CTimeMgr::GetInst()->Tick();
+	CKeyMgr::GetInst()->Tick();
 
 	// Object Tick
 	TempTick();
 
 	// Rendering
 	// Target Clear
-	float ClearColor[4] = {0.3f, 0.3f, 0.3f, 1.f};
+	constexpr float ClearColor[4] = {0.3f, 0.3f, 0.3f, 1.f};
 	CDevice::GetInst()->ClearTarget(ClearColor);
 
 	// Object Render

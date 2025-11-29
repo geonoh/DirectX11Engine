@@ -3,19 +3,19 @@
 
 void CAsset::AddRef()
 {
-	m_RefCount++;
+	ReferenceCount++;
 }
 
 void CAsset::Release()
 {
-	m_RefCount--;
-	if (m_RefCount <= 0)
+	ReferenceCount--;
+	if (ReferenceCount <= 0)
 	{
 		delete this;
 	}
 }
 
-CAsset::CAsset(ASSET_TYPE _Type) : m_Type(_Type), m_RefCount(0)
+CAsset::CAsset(const EAssetType Type) : Type(Type), ReferenceCount(0)
 {
 }
 

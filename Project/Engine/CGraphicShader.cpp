@@ -3,7 +3,7 @@
 
 #include "CDevice.h"
 
-CGraphicShader::CGraphicShader() : CShader(ASSET_TYPE::GRAPHICS_SHADER), m_Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+CGraphicShader::CGraphicShader() : CShader(EAssetType::GraphicsShader), Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 {
 }
 
@@ -11,23 +11,23 @@ CGraphicShader::~CGraphicShader()
 {
 }
 
-int CGraphicShader::CreateVertexShader(const wstring& _strFilePath, const string& _VSFuncName)
+int CGraphicShader::CreateVertexShader(const wstring& StrFilePath, const string& VsFuncName)
 {
 	if (FAILED(D3DCompileFromFile(
-		_strFilePath.c_str(),
+		StrFilePath.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		_VSFuncName.c_str(),
+		VsFuncName.c_str(),
 		"vs_5_0",
 		D3DCOMPILE_DEBUG,
 		0,
-		m_VSBlob.GetAddressOf(),
-		m_ErrBlob.GetAddressOf())))
+		VertexShaderBlob.GetAddressOf(),
+		ErrorBlob.GetAddressOf())))
 	{
-		if (nullptr != m_ErrBlob)
+		if (nullptr != ErrorBlob)
 		{
 			// 문법 오류
-			MessageBoxA(nullptr, static_cast<char*>(m_ErrBlob->GetBufferPointer()), "버텍스 쉐이더 컴파일 오류", MB_OK);
+			MessageBoxA(nullptr, static_cast<char*>(ErrorBlob->GetBufferPointer()), "버텍스 쉐이더 컴파일 오류", MB_OK);
 			return E_FAIL;
 		}
 		// 경로 오류
@@ -36,10 +36,10 @@ int CGraphicShader::CreateVertexShader(const wstring& _strFilePath, const string
 	}
 
 	if (FAILED(DEVICE->CreateVertexShader(
-		m_VSBlob->GetBufferPointer(),
-		m_VSBlob->GetBufferSize(),
+		VertexShaderBlob->GetBufferPointer(),
+		VertexShaderBlob->GetBufferSize(),
 		nullptr,
-		m_VS.GetAddressOf())))
+		VertexShader.GetAddressOf())))
 	{
 		return E_FAIL;
 	}
@@ -49,7 +49,7 @@ int CGraphicShader::CreateVertexShader(const wstring& _strFilePath, const string
 	D3D11_INPUT_ELEMENT_DESC LayoutDesc[2] = {};
 
 	LayoutDesc[0].AlignedByteOffset = 0;
-	LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;// Vec3과 맞는 사이즈 강제로 맞춤;;; Vtx::vPos
+	LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT; // Vec3과 맞는 사이즈 강제로 맞춤;;; Vtx::vPos
 	LayoutDesc[0].InputSlot = 0;
 	LayoutDesc[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	LayoutDesc[0].InstanceDataStepRate = 0;
@@ -57,7 +57,7 @@ int CGraphicShader::CreateVertexShader(const wstring& _strFilePath, const string
 	LayoutDesc[0].SemanticIndex = 0;
 
 	LayoutDesc[1].AlignedByteOffset = 12;
-	LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;// Vec4과 맞는 사이즈 강제로 맞춤, Vtx::vColor
+	LayoutDesc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT; // Vec4과 맞는 사이즈 강제로 맞춤, Vtx::vColor
 	LayoutDesc[1].InputSlot = 0;
 	LayoutDesc[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
 	LayoutDesc[1].InstanceDataStepRate = 0;
@@ -67,9 +67,9 @@ int CGraphicShader::CreateVertexShader(const wstring& _strFilePath, const string
 	if (FAILED(DEVICE->CreateInputLayout(
 		LayoutDesc,
 		2,
-		m_VSBlob->GetBufferPointer(),
-		m_VSBlob->GetBufferSize(),
-		m_Layout.GetAddressOf())))
+		VertexShaderBlob->GetBufferPointer(),
+		VertexShaderBlob->GetBufferSize(),
+		InputLayout.GetAddressOf())))
 	{
 		return E_FAIL;
 	}
@@ -78,23 +78,23 @@ int CGraphicShader::CreateVertexShader(const wstring& _strFilePath, const string
 	return S_OK;
 }
 
-int CGraphicShader::CreatePixelShader(const wstring& _strFilePath, const string& _PSFuncName)
+int CGraphicShader::CreatePixelShader(const wstring& StrFilePath, const string& PsFuncName)
 {
 	if (FAILED(D3DCompileFromFile(
-		_strFilePath.c_str(),
+		StrFilePath.c_str(),
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,
-		_PSFuncName.c_str(),
+		PsFuncName.c_str(),
 		"ps_5_0",
 		D3DCOMPILE_DEBUG,
 		0,
-		m_PSBlob.GetAddressOf(),
-		m_ErrBlob.GetAddressOf())))
+		PixelShaderBlob.GetAddressOf(),
+		ErrorBlob.GetAddressOf())))
 	{
-		if (nullptr != m_ErrBlob)
+		if (nullptr != ErrorBlob)
 		{
 			// 문법 오류
-			MessageBoxA(nullptr, static_cast<char*>(m_ErrBlob->GetBufferPointer()), "픽셀 쉐이더 컴파일 오류", MB_OK);
+			MessageBoxA(nullptr, static_cast<char*>(ErrorBlob->GetBufferPointer()), "픽셀 쉐이더 컴파일 오류", MB_OK);
 			return E_FAIL;
 		}
 		// 경로 오류
@@ -103,10 +103,10 @@ int CGraphicShader::CreatePixelShader(const wstring& _strFilePath, const string&
 	}
 
 	if (FAILED(DEVICE->CreatePixelShader(
-		m_PSBlob->GetBufferPointer(),
-		m_PSBlob->GetBufferSize(),
+		PixelShaderBlob->GetBufferPointer(),
+		PixelShaderBlob->GetBufferSize(),
 		nullptr,
-		m_PS.GetAddressOf())))
+		PixelShader.GetAddressOf())))
 	{
 		return E_FAIL;
 	}
@@ -114,16 +114,16 @@ int CGraphicShader::CreatePixelShader(const wstring& _strFilePath, const string&
 	return S_OK;
 }
 
-void CGraphicShader::SetTopology(D3D11_PRIMITIVE_TOPOLOGY _Topology)
+void CGraphicShader::SetTopology(const D3D11_PRIMITIVE_TOPOLOGY InTopology)
 {
-	m_Topology = _Topology;
+	Topology = InTopology;
 }
 
 void CGraphicShader::Binding()
 {
-	CONTEXT->IASetInputLayout(m_Layout.Get());
-	CONTEXT->IASetPrimitiveTopology(m_Topology);
+	CONTEXT->IASetInputLayout(InputLayout.Get());
+	CONTEXT->IASetPrimitiveTopology(Topology);
 
-	CONTEXT->VSSetShader(m_VS.Get(), nullptr, 0);
-	CONTEXT->PSSetShader(m_PS.Get(), nullptr, 0);
+	CONTEXT->VSSetShader(VertexShader.Get(), nullptr, 0);
+	CONTEXT->PSSetShader(PixelShader.Get(), nullptr, 0);
 }

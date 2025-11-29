@@ -3,7 +3,7 @@
 
 #include "CEngine.h"
 
-CTimeMgr::CTimeMgr() : m_llFrequency(), m_llCurCount(), m_llPrevCount(), m_DT(0), m_Time(0), m_AccTime(0), m_FrmCount(0)
+CTimeMgr::CTimeMgr() : Frequency(), CurrentCount(), PrevCount(), DeltaTime(0), Time(0), AccTime(0), FrameCount(0)
 {
 }
 
@@ -12,40 +12,40 @@ CTimeMgr::~CTimeMgr()
 }
 
 
-void CTimeMgr::init()
+void CTimeMgr::Init()
 {
 	// 초당 카운트 수
-	QueryPerformanceFrequency(&m_llFrequency);
-	QueryPerformanceCounter(&m_llCurCount);
-	m_llPrevCount = m_llCurCount;
+	QueryPerformanceFrequency(&Frequency);
+	QueryPerformanceCounter(&CurrentCount);
+	PrevCount = CurrentCount;
 }
 
-void CTimeMgr::tick()
+void CTimeMgr::Tick()
 {
-	QueryPerformanceCounter(&m_llCurCount);
+	QueryPerformanceCounter(&CurrentCount);
 
-	m_DT = static_cast<float>(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / static_cast<float>(m_llFrequency.QuadPart);
-	m_llPrevCount = m_llCurCount;
+	DeltaTime = static_cast<float>(CurrentCount.QuadPart - PrevCount.QuadPart) / static_cast<float>(Frequency.QuadPart);
+	PrevCount = CurrentCount;
 
 	// 누적 시간
-	m_Time += m_DT;
+	Time += DeltaTime;
 
-	m_AccTime += m_DT;
-	++m_FrmCount;
+	AccTime += DeltaTime;
+	++FrameCount;
 
-	if (1.f < m_AccTime)
+	if (1.f < AccTime)
 	{
-		HWND hMainWnd = CEngine::GetInst()->GetMainWnd();
-		wchar_t szText[255] = {};
-		swprintf_s(szText, L"FPS : %d, DeltaTime : %f", m_FrmCount, m_DT);
-		SetWindowText(hMainWnd, szText);
+		const HWND HMainWnd = CEngine::GetInst()->GetMainWnd();
+		wchar_t Text[255] = {};
+		swprintf_s(Text, L"FPS : %d, DeltaTime : %f", FrameCount, DeltaTime);
+		SetWindowText(HMainWnd, Text);
 
-		m_AccTime -= 1.f;
-		m_FrmCount = 0;
+		AccTime -= 1.f;
+		FrameCount = 0;
 	}
 }
 
 float CTimeMgr::GetDeltaTime() const
 {
-	return m_DT;
+	return DeltaTime;
 }

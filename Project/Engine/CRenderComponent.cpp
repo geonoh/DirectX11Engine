@@ -3,27 +3,27 @@
 #include "CMesh.h"
 #include "CGraphicShader.h"
 
-void CRenderComponent::SetMesh(Ptr<CMesh> _Mesh)
+void CRenderComponent::SetMesh(const Ptr<CMesh>& InMesh)
 {
-	m_Mesh = _Mesh;
+	Mesh = InMesh;
 }
 
-void CRenderComponent::SetShader(Ptr<CGraphicShader> _Shader)
+void CRenderComponent::SetShader(const Ptr<CGraphicShader>& InShader)
 {
-	m_Shader = _Shader;
+	Shader = InShader;
 }
 
 Ptr<CMesh> CRenderComponent::GetMesh()
 {
-	return m_Mesh;
+	return Mesh;
 }
 
 Ptr<CGraphicShader> CRenderComponent::GetShader()
 {
-	return m_Shader;
+	return Shader;
 }
 
-CRenderComponent::CRenderComponent(COMPONENT_TYPE _Type) : CComponent(_Type)
+CRenderComponent::CRenderComponent(const EComponentType Type) : CComponent(Type)
 {
 }
 

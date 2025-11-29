@@ -7,21 +7,21 @@ public:
     CGraphicShader();
     ~CGraphicShader() override;
 
-    int CreateVertexShader(const wstring& _strFilePath, const string& _VSFuncName);
-    int CreatePixelShader(const wstring& _strFilePath, const string& _PSFuncName);
+    int CreateVertexShader(const wstring& StrFilePath, const string& VsFuncName);
+    int CreatePixelShader(const wstring& StrFilePath, const string& PsFuncName);
 
-    void SetTopology(D3D11_PRIMITIVE_TOPOLOGY _Topology);
+    void SetTopology(D3D11_PRIMITIVE_TOPOLOGY InTopology);
     virtual void Binding() override;
 
 private:
-    ComPtr<ID3DBlob> m_VSBlob;
-    ComPtr<ID3DBlob> m_PSBlob;
+    ComPtr<ID3DBlob> VertexShaderBlob;
+    ComPtr<ID3DBlob> PixelShaderBlob;
 
-    ComPtr<ID3D11VertexShader> m_VS;
-    ComPtr<ID3D11PixelShader> m_PS;
+    ComPtr<ID3D11VertexShader> VertexShader;
+    ComPtr<ID3D11PixelShader> PixelShader;
 
-    ComPtr<ID3D11InputLayout> m_Layout;
+    ComPtr<ID3D11InputLayout> InputLayout;
 
-    D3D11_PRIMITIVE_TOPOLOGY m_Topology;
+    D3D11_PRIMITIVE_TOPOLOGY Topology;
 };
 

@@ -4,77 +4,77 @@ template<typename T>
 class Ptr
 {
 private:
-	T* m_Asset;
+	T* Asset;
 
 public:
-	T* Get() { return m_Asset; }
-	T** GetAddressOf() { return &m_Asset; }
+	T* Get() { return Asset; }
+	T** GetAddressOf() { return &Asset; }
 
 public:
-	void operator = (T* _Asset)
+	void operator = (T* InAsset)
 	{
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->Release();
+			Asset->Release();
 		}
 
-		m_Asset = _Asset;
+		Asset = InAsset;
 
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->AddRef();
+			Asset->AddRef();
 		}
 	}
 
-	void operator = (const Ptr<T>& _Other)
+	void operator = (const Ptr<T>& Other)
 	{
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->Release();
+			Asset->Release();
 		}
 
-		m_Asset = _Other.m_Asset;
+		Asset = Other.Asset;
 
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->AddRef();
+			Asset->AddRef();
 		}
 	}
 
 	T* operator->()
 	{
-		return m_Asset;
+		return Asset;
 	}
 
 public:
 	Ptr()
-		: m_Asset(nullptr)
+		: Asset(nullptr)
 	{
 	}
 
-	Ptr(T* _Asset)
-		: m_Asset(_Asset)
+	Ptr(T* InAsset)
+		: Asset(InAsset)
 	{
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->AddRef();
+			Asset->AddRef();
 		}
 	}
 
-	Ptr(const Ptr<T>& _Other)
-		: m_Asset(_Other.m_Asset)
+	Ptr(const Ptr<T>& Other)
+		: Asset(Other.Asset)
 	{
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->AddRef();
+			Asset->AddRef();
 		}
 	}
 
 	~Ptr()
 	{
-		if (m_Asset)
+		if (Asset)
 		{
-			m_Asset->Release();
+			Asset->Release();
 		}
 	}
 };

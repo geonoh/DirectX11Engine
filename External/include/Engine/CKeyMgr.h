@@ -1,7 +1,7 @@
 #pragma once
 #include "singleton.h"
 
-enum class KEY
+enum class EKey
 {
 	W,
     S,
@@ -34,17 +34,17 @@ enum class KEY
     KEY_END,
 };
 
-enum class KEY_STATE
+enum class EKeyState
 {
-	TAP,        // 누른 순간
-    PRESSED,    // 눌려진 상태
-    RELEASED,   // 뗀 순간
-    NONE,
+	Tap,        // 누른 순간
+    Pressed,    // 눌려진 상태
+    Released,   // 뗀 순간
+    None,
 };
 
-struct tKeyInfo
+struct KeyInfo
 {
-    KEY_STATE State;
+    EKeyState State;
     bool PrevPressed;
 };
 
@@ -53,12 +53,12 @@ class CKeyMgr :
 {
     SINGLE(CKeyMgr)
 private:
-    vector<tKeyInfo> m_vecKey;
+    vector<KeyInfo> Keys;
 
 public:
-    void init();
-    void tick();
+    void Init();
+    void Tick();
 
-    KEY_STATE GetKeyState(KEY _Key) const;
+    EKeyState GetKeyState(EKey InKey) const;
 };
 

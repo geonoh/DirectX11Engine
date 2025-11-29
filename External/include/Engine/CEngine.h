@@ -5,11 +5,11 @@ class CEngine : public CSingleton<CEngine>
 	SINGLE(CEngine);
 
 private:
-	HWND m_hMainHwnd;
-	POINT m_Resolution;
+	HWND MainHwnd;
+	POINT Resolution;
 
 public:
-	HWND GetMainWnd() { return m_hMainHwnd; }
-	int Init(HWND _hWnd, POINT _Resolution);
-	void Progress();
+	HWND GetMainWnd() const { return MainHwnd; }
+	int Init(HWND InHwnd, POINT InResolution);
+	static void Progress();
 };

@@ -6,7 +6,6 @@
 #include "CDevice.h"
 #include "CGraphicShader.h"
 #include "CKeyMgr.h"
-#include "CTimeMgr.h"
 #include "CMesh.h"
 #include "ptr.h"
 
@@ -14,33 +13,31 @@
 #include "CMeshRender.h"
 #include "CTransform.h"
 
-CGameObject* pObject = nullptr;
+static CGameObject* Object = nullptr;
 
 int TempInit()
 {
-	pObject = new CGameObject;
-	pObject->AddComponent(new CTransform);
-	pObject->AddComponent(new CMeshRender);
-	pObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	pObject->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader"));
+	Object = new CGameObject;
+	Object->AddComponent(new CTransform);
+	Object->AddComponent(new CMeshRender);
+	Object->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	Object->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader"));
 
 	return S_OK;
 }
 
 void TempRelease()
 {
-	delete pObject;
+	delete Object;
 }
 
 void TempTick()
 {
-	const float DT = CTimeMgr::GetInst()->GetDeltaTime();
-
-	pObject->tick();
-	pObject->finaltick();
+	Object->Tick();
+	Object->FinalTick();
 }
 
 void TempRender()
 {
-	pObject->render();
+	Object->Render();
 }

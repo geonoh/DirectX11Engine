@@ -1,99 +1,97 @@
 #include "pch.h"
 #include "CKeyMgr.h"
 
-UINT g_keyValue[static_cast<int>(KEY::KEY_END)] = 
+UINT KeyValues[static_cast<int>(EKey::KEY_END)] =
 {
-    'W',
-    'S',
-    'A',
-    'D',
+	'W',
+	'S',
+	'A',
+	'D',
 
-    '0',
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
+	'0',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
 
-    VK_LEFT,
-    VK_RIGHT,
-    VK_UP,
-    VK_DOWN,
+	VK_LEFT,
+	VK_RIGHT,
+	VK_UP,
+	VK_DOWN,
 
-    VK_RETURN,
-    VK_ESCAPE,
-    VK_SPACE,
-    VK_LSHIFT,
-    VK_MENU,
-    VK_CONTROL,
+	VK_RETURN,
+	VK_ESCAPE,
+	VK_SPACE,
+	VK_LSHIFT,
+	VK_MENU,
+	VK_CONTROL,
 
-    //KEY_END,
+	//KEY_END,
 };
 
 CKeyMgr::CKeyMgr()
 {
-	
 }
 
 CKeyMgr::~CKeyMgr()
 {
-
 }
 
-void CKeyMgr::init()
+void CKeyMgr::Init()
 {
-	for (int i = 0; i < static_cast<int>(KEY::KEY_END); ++i)
+	for (int i = 0; i < static_cast<int>(EKey::KEY_END); ++i)
 	{
-		tKeyInfo info = {};
-		info.State = KEY_STATE::NONE;
+		KeyInfo info = {};
+		info.State = EKeyState::None;
 		info.PrevPressed = false;
-		m_vecKey.push_back(info);
+		Keys.push_back(info);
 	}
 }
 
-void CKeyMgr::tick()
+void CKeyMgr::Tick()
 {
-	for (size_t i = 0; i < m_vecKey.size(); ++i)
+	for (size_t i = 0; i < Keys.size(); ++i)
 	{
-        // KEY 가 눌렸다
-        if (GetAsyncKeyState(g_keyValue[i]) & 0x8001)
-        {
-            if (!m_vecKey[i].PrevPressed)
-            {
-                m_vecKey[i].State = KEY_STATE::TAP;
-            }
+		// EKey 가 눌렸다
+		if (GetAsyncKeyState(KeyValues[i]) & 0x8001)
+		{
+			if (!Keys[i].PrevPressed)
+			{
+				Keys[i].State = EKeyState::Tap;
+			}
 
-            // 이전에도 눌려있었다.
-            else
-            {
-                m_vecKey[i].State = KEY_STATE::PRESSED;
-            }
+			// 이전에도 눌려있었다.
+			else
+			{
+				Keys[i].State = EKeyState::Pressed;
+			}
 
-            m_vecKey[i].PrevPressed = true;
-        }
-        else
-        {
-	        // 해당 KEY가 안눌려있다.
-            if (m_vecKey[i].PrevPressed)
-            {
-	            // 이전 Frame에서는 눌려있었다.
-                m_vecKey[i].State = KEY_STATE::RELEASED;
-            }
-            else
-            {
-                m_vecKey[i].State = KEY_STATE::NONE;
-            }
+			Keys[i].PrevPressed = true;
+		}
+		else
+		{
+			// 해당 KEY가 안눌려있다.
+			if (Keys[i].PrevPressed)
+			{
+				// 이전 Frame에서는 눌려있었다.
+				Keys[i].State = EKeyState::Released;
+			}
+			else
+			{
+				Keys[i].State = EKeyState::None;
+			}
 
-            m_vecKey[i].PrevPressed = false;
-        }
+			Keys[i].PrevPressed = false;
+		}
 	}
 }
 
-KEY_STATE CKeyMgr::GetKeyState(const KEY _Key) const
+EKeyState CKeyMgr::GetKeyState(const EKey InKey) const
 {
-    return m_vecKey[static_cast<int>(_Key)].State;
+	return Keys[static_cast<int>(InKey)].State;
 }

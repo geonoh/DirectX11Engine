@@ -4,8 +4,8 @@
 class CMeshRender : public CRenderComponent
 {
 public:
-	virtual void finaltick() override;
-	virtual void render() override;
+	virtual void FinalTick() override;
+	virtual void Render() override;
 
 public:
 	CMeshRender();

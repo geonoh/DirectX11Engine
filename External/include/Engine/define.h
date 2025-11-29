@@ -16,7 +16,7 @@ typedef Vector4 Vec4;
 
 #define KEY_CHECK(Key, State) CKeyMgr::GetInst()->GetKeyState(Key) == State
 
-#define KEY_TAP(Key) KEY_CHECK(Key, KEY_STATE::TAP)
-#define KEY_PRESSED(Key) KEY_CHECK(Key, KEY_STATE::PRESSED)
-#define KEY_RELEASED(Key) KEY_CHECK(Key, KEY_STATE::RELEASED)
-#define KEY_NONE(Key) KEY_CHECK(Key, KEY_STATE::NONE)
+#define KEY_TAP(Key) KEY_CHECK(Key, EKeyState::Tap)
+#define KEY_PRESSED(Key) KEY_CHECK(Key, EKeyState::Pressed)
+#define KEY_RELEASED(Key) KEY_CHECK(Key, EKeyState::Released)
+#define KEY_NONE(Key) KEY_CHECK(Key, EKeyState::None)

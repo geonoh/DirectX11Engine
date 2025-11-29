@@ -2,47 +2,48 @@
 #include "CMesh.h"
 #include "CDevice.h"
 
-int CMesh::Create(const Vtx* _VtxSysMem, const size_t _VtxCount, const UINT* _IdxSysMem, const size_t _IdxCount)
+int CMesh::Create(const Vtx* InVertexSystemMemory, const size_t InVertexCount, const UINT* InIndexSystemMemory,
+                  const size_t InIndexCount)
 {
-	m_VtxCount = _VtxCount;
+	VertexCount = InVertexCount;
 	// Create Vertex Buffer
-	m_VBDesc.ByteWidth = sizeof(Vtx) * _VtxCount;
-	m_VBDesc.MiscFlags = 0;
+	VertexBufferDesc.ByteWidth = sizeof(Vtx) * InVertexCount;
+	VertexBufferDesc.MiscFlags = 0;
 
-	m_VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	m_VBDesc.CPUAccessFlags = 0;
-	m_VBDesc.Usage = D3D11_USAGE_DEFAULT;
+	VertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	VertexBufferDesc.CPUAccessFlags = 0;
+	VertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 
 	D3D11_SUBRESOURCE_DATA SubDesc = {};
-	SubDesc.pSysMem = _VtxSysMem;
+	SubDesc.pSysMem = InVertexSystemMemory;
 
-	if (FAILED(DEVICE->CreateBuffer(&m_VBDesc, &SubDesc, m_VB.GetAddressOf())))
+	if (FAILED(DEVICE->CreateBuffer(&VertexBufferDesc, &SubDesc, VertexBuffer.GetAddressOf())))
 	{
 		return E_FAIL;
 	}
 
-	m_IdxCount = _IdxCount;
+	IndexCount = InIndexCount;
 	// Create Index Buffer
-	m_IBDesc.ByteWidth = sizeof(UINT) * _IdxCount;
-	m_IBDesc.MiscFlags = 0;
+	IndexBufferDesc.ByteWidth = sizeof(UINT) * InIndexCount;
+	IndexBufferDesc.MiscFlags = 0;
 
-	m_IBDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-	m_IBDesc.CPUAccessFlags = 0;
-	m_IBDesc.Usage = D3D11_USAGE_DEFAULT;
+	IndexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	IndexBufferDesc.CPUAccessFlags = 0;
+	IndexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
 
 	D3D11_SUBRESOURCE_DATA IbSubDesc = {};
-	IbSubDesc.pSysMem = _IdxSysMem;
+	IbSubDesc.pSysMem = InIndexSystemMemory;
 
-	if (FAILED(DEVICE->CreateBuffer(&m_IBDesc, &IbSubDesc, m_IB.GetAddressOf())))
+	if (FAILED(DEVICE->CreateBuffer(&IndexBufferDesc, &IbSubDesc, IndexBuffer.GetAddressOf())))
 	{
 		return E_FAIL;
 	}
 
 	// SysMem 유지
-	m_VtxSysMem = new Vtx[m_VtxCount];
-	memcpy(m_VtxSysMem, _VtxSysMem, sizeof(Vtx) * m_VtxCount);
-	m_IdxSysMem = new UINT[m_IdxCount];
-	memcpy(m_IdxSysMem, _IdxSysMem, sizeof(UINT) * m_IdxCount);
+	VertexSystemMemory = new Vtx[VertexCount];
+	memcpy(VertexSystemMemory, InVertexSystemMemory, sizeof(Vtx) * VertexCount);
+	IndexSystemMemory = new UINT[IndexCount];
+	memcpy(IndexSystemMemory, InIndexSystemMemory, sizeof(UINT) * IndexCount);
 
 	return S_OK;
 }
@@ -54,35 +55,36 @@ void CMesh::Binding()
 	CONTEXT->IASetVertexBuffers(
 		0,
 		1,
-		m_VB.GetAddressOf(),
+		VertexBuffer.GetAddressOf(),
 		&Stride,
 		&Offset);
-	CONTEXT->IASetIndexBuffer(m_IB.Get(), DXGI_FORMAT_R32_UINT/*4바이트 포멧*/, 0);
+	CONTEXT->IASetIndexBuffer(IndexBuffer.Get(), DXGI_FORMAT_R32_UINT/*4바이트 포멧*/, 0);
 }
 
 void CMesh::Render()
 {
 	Binding();
-	CONTEXT->DrawIndexed(m_IdxCount, 0, 0);
+	CONTEXT->DrawIndexed(IndexCount, 0, 0);
 }
 
 CMesh::CMesh()
-	: CAsset(ASSET_TYPE::MESH), m_VBDesc(), m_VtxCount(0), m_VtxSysMem(nullptr), m_IBDesc(), m_IdxCount(0),
-	  m_IdxSysMem(nullptr)
+	: CAsset(EAssetType::Mesh), VertexBufferDesc(), VertexCount(0), VertexSystemMemory(nullptr), IndexBufferDesc(),
+	  IndexCount(0),
+	  IndexSystemMemory(nullptr)
 {
 }
 
 CMesh::~CMesh()
 {
-	if (m_VtxSysMem)
+	if (VertexSystemMemory)
 	{
-		delete[] m_VtxSysMem;
-		m_VtxSysMem = nullptr;
+		delete[] VertexSystemMemory;
+		VertexSystemMemory = nullptr;
 	}
 
-	if (m_IdxSysMem)
+	if (IndexSystemMemory)
 	{
-		delete[] m_IdxSysMem;
-		m_IdxSysMem = nullptr;
+		delete[] IndexSystemMemory;
+		IndexSystemMemory = nullptr;
 	}
 }

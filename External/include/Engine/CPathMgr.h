@@ -1,14 +1,15 @@
 #pragma once
 #include "singleton.h"
+
 class CPathMgr :
-    public CSingleton<CPathMgr>
+	public CSingleton<CPathMgr>
 {
-    SINGLE(CPathMgr);
+	SINGLE(CPathMgr);
+
 private:
-    wchar_t m_szContentPath[255];
+	wchar_t ContentPath[255];
 
 public:
-    void init();
-    const wchar_t* GetContentPath() const;
+	void Init();
+	const wchar_t* GetContentPath() const;
 };
-

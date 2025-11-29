@@ -3,7 +3,7 @@
 
 #include "CDevice.h"
 
-CConstBuffer::CConstBuffer() : m_Desc(), m_Type(CB_TYPE::END)
+CConstBuffer::CConstBuffer() : Desc(), ConstantBufferType(EConstantBufferType::End)
 {
 }
 
@@ -11,19 +11,19 @@ CConstBuffer::~CConstBuffer()
 {
 }
 
-int CConstBuffer::Create(const size_t _bufferSize, const CB_TYPE _Type)
+int CConstBuffer::Create(const size_t BufferSize, const EConstantBufferType Type)
 {
-	m_Type = _Type;
+	ConstantBufferType = Type;
 
-	m_Desc.ByteWidth = _bufferSize;
-	m_Desc.MiscFlags = 0;
+	Desc.ByteWidth = BufferSize;
+	Desc.MiscFlags = 0;
 
-	m_Desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	Desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
-	m_Desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	m_Desc.Usage = D3D11_USAGE_DYNAMIC;
+	Desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	Desc.Usage = D3D11_USAGE_DYNAMIC;
 
-	if (FAILED(DEVICE->CreateBuffer(&m_Desc, nullptr, m_CB.GetAddressOf())))
+	if (FAILED(DEVICE->CreateBuffer(&Desc, nullptr, ConstantBuffer.GetAddressOf())))
 	{
 		return E_FAIL;
 	}
@@ -31,16 +31,16 @@ int CConstBuffer::Create(const size_t _bufferSize, const CB_TYPE _Type)
 	return S_OK;
 }
 
-void CConstBuffer::SetData(void* _pData)
+void CConstBuffer::SetData(const void* Data) const
 {
-	D3D11_MAPPED_SUBRESOURCE tSub = {};
+	D3D11_MAPPED_SUBRESOURCE SubResource = {};
 
-	CONTEXT->Map(m_CB.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &tSub);
-	memcpy(tSub.pData, _pData, m_Desc.ByteWidth);
-	CONTEXT->Unmap(m_CB.Get(), 0);
+	CONTEXT->Map(ConstantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &SubResource);
+	memcpy(SubResource.pData, Data, Desc.ByteWidth);
+	CONTEXT->Unmap(ConstantBuffer.Get(), 0);
 }
 
 void CConstBuffer::Binding()
 {
-	CONTEXT->VSSetConstantBuffers(static_cast<UINT>(m_Type), 1, m_CB.GetAddressOf());
+	CONTEXT->VSSetConstantBuffers(static_cast<UINT>(ConstantBufferType), 1, ConstantBuffer.GetAddressOf());
 }

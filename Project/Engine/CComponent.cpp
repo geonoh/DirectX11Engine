@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "CComponent.h"
 
-COMPONENT_TYPE CComponent::GetComponentType() const
+EComponentType CComponent::GetComponentType() const
 {
-	return m_Type;;
+	return Type;
 }
 
-CComponent::CComponent(const COMPONENT_TYPE _Type)
-	:m_Type(_Type)
+CComponent::CComponent(const EComponentType InType)
+	: Type(InType)
 {
 }
 

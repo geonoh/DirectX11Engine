@@ -1,46 +1,45 @@
 #pragma once
 
-enum class COMPONENT_TYPE
+enum class EComponentType
 {
-	TRANSFORM,
-	CAMERA,
-	COLLIDER2D,
-	COLLIDER3D,
-	ANIMATOR2D,
-	ANIMATOR3D,
-	LIGHT2D,
-	LIGHT3D,
+	Transform,
+	Camera,
+	Collider2D,
+	Collider3D,
+	Animator2D,
+	Animator3D,
+	Light2D,
+	Light3D,
 
-	MESHRENDER,
-	DECAL,
-	PARTICLESYSTEM,
-	TILEMAP,
-	LANDSCAPE,
+	MeshRender,
+	Decal,
+	ParticleSystem,
+	Tilemap,
+	Landscape,
 
-	END,	// 기본 컴포넌트
+	End,	// 기본 컴포넌트
 
-	SCRIPT,
+	Script,
 };
 
-enum class ASSET_TYPE
+enum class EAssetType
 {
-	PREFAB,
-	MESH,
-	MESH_DATA,
-	MATERIAL,
-	TEXTURE,
-	SOUND,
-	GRAPHICS_SHADER,
-	COMPUTE_SHADER,
-	END,
+	Prefab,
+	Mesh,
+	MeshData,
+	Material,
+	Texture,
+	Sound,
+	GraphicsShader,
+	ComputeShader,
+	End,
 };
 
-enum class CB_TYPE
+enum class EConstantBufferType
 {
-	TRANSFORM,
-	MATERIAL,
-	ANIMATION,
-	GLOBAL,
-	END,
-
+	Transform,
+	Material,
+	Animation,
+	Global,
+	End,
 };

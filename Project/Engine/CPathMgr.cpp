@@ -3,34 +3,32 @@
 
 CPathMgr::CPathMgr()
 {
-	
 }
 
 CPathMgr::~CPathMgr()
 {
-	
 }
 
 
-void CPathMgr::init()
+void CPathMgr::Init()
 {
-	GetCurrentDirectory(255, m_szContentPath);
-	size_t len = wcslen(m_szContentPath);
+	GetCurrentDirectory(255, ContentPath);
+	const size_t Len = wcslen(ContentPath);
 
 	// 하나의 디렉토리 앞 폴더로 이동
-	for (int i = len - 1; i > 0; --i)
+	for (int i = Len - 1; i > 0; --i)
 	{
-		if (m_szContentPath[i] == '\\')
+		if (ContentPath[i] == '\\')
 		{
-			m_szContentPath[i] = '\0';
+			ContentPath[i] = '\0';
 			break;
 		}
 	}
 
-	wcscat_s(m_szContentPath, L"\\content\\");
+	wcscat_s(ContentPath, L"\\content\\");
 }
 
 const wchar_t* CPathMgr::GetContentPath() const
 {
-	return m_szContentPath;
+	return ContentPath;
 }

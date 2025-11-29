@@ -4,17 +4,17 @@
 #include "CGraphicShader.h"
 #include "CMesh.h"
 
-void CMeshRender::finaltick()
+void CMeshRender::FinalTick()
 {
 }
 
-void CMeshRender::render()
+void CMeshRender::Render()
 {
 	GetShader()->Binding();
 	GetMesh()->Render();
 }
 
-CMeshRender::CMeshRender() : CRenderComponent(COMPONENT_TYPE::MESHRENDER)
+CMeshRender::CMeshRender() : CRenderComponent(EComponentType::MeshRender)
 {
 }
 

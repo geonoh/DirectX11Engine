@@ -6,96 +6,98 @@
 #include "CRenderComponent.h"
 #include "CTransform.h"
 
-void CGameObject::begin()
+void CGameObject::Begin()
 {
-	for (CComponent* pComponent : m_arrCom)
+	for (CComponent* Component : Components)
 	{
-		if (!pComponent)
+		if (!Component)
 		{
 			continue;
 		}
-		pComponent->begin();
+		Component->Begin();
 	}
 }
 
-void CGameObject::tick()
+void CGameObject::Tick()
 {
-	for (CComponent* pComponent : m_arrCom)
+	for (CComponent* Component : Components)
 	{
-		if (!pComponent)
+		if (!Component)
 		{
 			continue;
 		}
-		pComponent->tick();
+		Component->Tick();
 	}
 }
 
-void CGameObject::finaltick()
+void CGameObject::FinalTick()
 {
-	for (CComponent* pComponent : m_arrCom)
+	for (CComponent* Component : Components)
 	{
-		if (!pComponent)
+		if (!Component)
 		{
 			continue;
 		}
-		pComponent->finaltick();
+		Component->FinalTick();
 	}
 }
 
-void CGameObject::render()
+void CGameObject::Render()
 {
-	if (m_RenderCom)
+	if (!RenderComponent)
 	{
-		m_RenderCom->render();
+		return;
 	}
+
+	RenderComponent->Render();
 }
 
-void CGameObject::AddComponent(CComponent* _Component)
+void CGameObject::AddComponent(CComponent* Component)
 {
 	// 입력으로 들어온 컴포넌트의 타입을 확인한다.
-	const COMPONENT_TYPE type = _Component->GetComponentType();
+	const EComponentType type = Component->GetComponentType();
 
 	// 입력으로 들어온 컴포넌트를 이미 가지고 있는 경우
-	assert(!m_arrCom[static_cast<UINT>(type)]);
+	assert(!Components[static_cast<UINT>(type)]);
 
 	// 입력된 컴포넌트가 렌더링 관련 컴포넌트인지 확인 
-	CRenderComponent* pRenderCom = dynamic_cast<CRenderComponent*>(_Component);
-	if (pRenderCom)
+	CRenderComponent* NewRenderComponent = dynamic_cast<CRenderComponent*>(Component);
+	if (NewRenderComponent)
 	{
 		// 이미 렌더링 관련 컴포넌트를 보유한 경우
-		assert(!m_RenderCom);
+		assert(!RenderComponent);
 
 		// 렌더링 관련 컴포넌트라면 멤버 변수에 별도 기록
-		m_RenderCom = pRenderCom;
+		RenderComponent = NewRenderComponent;
 	}
 
 	// 입력된 컴포넌트를 배열의 알맞은 인덱스 자리에 주소값을 기록한다.
-	m_arrCom[static_cast<UINT>(type)] = _Component;
+	Components[static_cast<UINT>(type)] = Component;
 
 	// 컴포넌트의 소유 오브젝트가 본인임을 알림
-	_Component->m_Owner = this;
+	Component->Owner = this;
 }
 
-CComponent* CGameObject::GetComponent(COMPONENT_TYPE _Type) const
+CComponent* CGameObject::GetComponent(EComponentType _Type) const
 {
-	return m_arrCom[static_cast<UINT>(_Type)];
+	return Components[static_cast<UINT>(_Type)];
 }
 
 CTransform* CGameObject::Transform() const
 {
-	return dynamic_cast<CTransform*>(m_arrCom[static_cast<UINT>(COMPONENT_TYPE::TRANSFORM)]);
+	return dynamic_cast<CTransform*>(Components[static_cast<UINT>(EComponentType::Transform)]);
 }
 
 CMeshRender* CGameObject::MeshRender() const
 {
-	return dynamic_cast<CMeshRender*>(m_arrCom[static_cast<UINT>(COMPONENT_TYPE::MESHRENDER)]);
+	return dynamic_cast<CMeshRender*>(Components[static_cast<UINT>(EComponentType::MeshRender)]);
 }
 
-CGameObject::CGameObject() : m_arrCom{}, m_RenderCom(nullptr)
+CGameObject::CGameObject() : Components{}, RenderComponent(nullptr)
 {
 }
 
 CGameObject::~CGameObject()
 {
-	Safe_Del_Array(m_arrCom);
+	Safe_Del_Array(Components);
 }

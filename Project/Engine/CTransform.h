@@ -3,30 +3,26 @@
 
 class CTransform : public CComponent
 {
-private:
-	Vec3 m_RelativePos;
-	Vec3 m_RelativeScale;
-	Vec3 m_RelativeRotation;
+	Vec3 RelativePos;
+	Vec3 RelativeScale;
+	Vec3 RelativeRotation;
 
 public:
-	virtual void finaltick() override;
-	void Binding();
+	virtual void FinalTick() override;
+	void Binding() const;
 
-public:
-	Vec3 GetRelativePos() { return m_RelativePos; }
-	Vec3 GetRelativeScale() { return m_RelativeScale; }
-	Vec3 GetRelativeRotation() { return m_RelativeRotation; }
+	Vec3 GetRelativePos() { return RelativePos; }
+	Vec3 GetRelativeScale() { return RelativeScale; }
+	Vec3 GetRelativeRotation() { return RelativeRotation; }
 
-	void SetRelativePos(const Vec3& _vPos) { m_RelativePos = _vPos; }
-	void SetRelativeScale(const Vec3& _vScale) { m_RelativeScale = _vScale; }
-	void SetRelativeRotation(const Vec3& _vRotation) { m_RelativeRotation = _vRotation; }
+	void SetRelativePos(const Vec3& InPos) { RelativePos = InPos; }
+	void SetRelativeScale(const Vec3& InScale) { RelativeScale = InScale; }
+	void SetRelativeRotation(const Vec3& InRotation) { RelativeRotation = InRotation; }
 
-	void SetRelativePos(float _x, float _y, float _z) { m_RelativePos = Vec3(_x, _y, _z); }
-	void SetRelativeScale(float _x, float _y, float _z) { m_RelativeScale = Vec3(_x, _y, _z); }
-	void SetRelativeRotation(float _x, float _y, float _z) { m_RelativeRotation = Vec3(_x, _y, _z); }
+	void SetRelativePos(float x, float y, float z) { RelativePos = Vec3(x, y, z); }
+	void SetRelativeScale(float x, float y, float z) { RelativeScale = Vec3(x, y, z); }
+	void SetRelativeRotation(float x, float y, float z) { RelativeRotation = Vec3(x, y, z); }
 
-public:
 	CTransform();
-	~CTransform();
+	virtual ~CTransform() override;
 };
-

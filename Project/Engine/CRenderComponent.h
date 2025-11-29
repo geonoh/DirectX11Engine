@@ -7,21 +7,21 @@ class CMesh;
 class CRenderComponent : public CComponent
 {
 private:
-	Ptr<CMesh> m_Mesh;
-	Ptr<CGraphicShader> m_Shader;
+	Ptr<CMesh> Mesh;
+	Ptr<CGraphicShader> Shader;
 
 public:
-	virtual void render() = 0;
+	virtual void Render() = 0;
 
 public:
-	void SetMesh(Ptr<CMesh> _Mesh);
-	void SetShader(Ptr<CGraphicShader> _Shader);
+	void SetMesh(const Ptr<CMesh>& InMesh);
+	void SetShader(const Ptr<CGraphicShader>& InShader);
 
 	Ptr<CMesh> GetMesh();
 	Ptr<CGraphicShader> GetShader();
 
 public:
-	CRenderComponent(COMPONENT_TYPE _Type);
+	CRenderComponent(EComponentType Type);
 	virtual ~CRenderComponent() override;
 };
 

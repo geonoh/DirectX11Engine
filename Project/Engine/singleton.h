@@ -4,28 +4,28 @@ template<typename T>
 class CSingleton
 {
 private:
-	static T* m_This;
+	static T* This;
 
 public:
 	static T* GetInst()
 	{
-		if (!m_This)
+		if (!This)
 		{
-			m_This = new T;
+			This = new T;
 		}
 
-		return m_This;
+		return This;
 	}
 
 	static void Destroy()
 	{
-		if (!m_This)
+		if (!This)
 		{
 			return;
 		}
 
-		delete m_This;
-		m_This = nullptr;
+		delete This;
+		This = nullptr;
 	}
 
 protected:
@@ -34,7 +34,7 @@ protected:
 		// main 함수 종료될 때, 함수를 실행시켜줌!
 		atexit(&CSingleton<T>::Destroy);
 	}
-	CSingleton(const CSingleton& _other) = delete;
+	CSingleton(const CSingleton& Other) = delete;
 	~CSingleton()
 	{
 		
@@ -42,4 +42,4 @@ protected:
 };
 
 template<typename T>
-T* CSingleton<T>::m_This = nullptr;
+T* CSingleton<T>::This = nullptr;
