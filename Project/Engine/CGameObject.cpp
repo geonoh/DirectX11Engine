@@ -4,6 +4,7 @@
 #include "CComponent.h"
 #include "CMeshRender.h"
 #include "CRenderComponent.h"
+#include "CScript.h"
 #include "CTransform.h"
 
 void CGameObject::Begin()
@@ -15,6 +16,15 @@ void CGameObject::Begin()
 			continue;
 		}
 		Component->Begin();
+	}
+
+	for (CScript* Script : Scripts)
+	{
+		if (!Script)
+		{
+			continue;
+		}
+		Script->Begin();
 	}
 }
 
@@ -28,6 +38,15 @@ void CGameObject::Tick()
 		}
 		Component->Tick();
 	}
+
+	for (CScript* Script : Scripts)
+	{
+		if (!Script)
+		{
+			continue;
+		}
+		Script->Tick();
+	}
 }
 
 void CGameObject::FinalTick()
@@ -40,6 +59,8 @@ void CGameObject::FinalTick()
 		}
 		Component->FinalTick();
 	}
+
+	// Script는 FinalTick (어차피) 처리안함
 }
 
 void CGameObject::Render()
@@ -55,24 +76,34 @@ void CGameObject::Render()
 void CGameObject::AddComponent(CComponent* Component)
 {
 	// 입력으로 들어온 컴포넌트의 타입을 확인한다.
-	const EComponentType type = Component->GetComponentType();
+	const EComponentType Type = Component->GetComponentType();
 
-	// 입력으로 들어온 컴포넌트를 이미 가지고 있는 경우
-	assert(!Components[static_cast<UINT>(type)]);
-
-	// 입력된 컴포넌트가 렌더링 관련 컴포넌트인지 확인 
-	CRenderComponent* NewRenderComponent = dynamic_cast<CRenderComponent*>(Component);
-	if (NewRenderComponent)
+	// 입력된 컴포넌트가 Script 인 경우
+	if (Type == EComponentType::Script)
 	{
-		// 이미 렌더링 관련 컴포넌트를 보유한 경우
-		assert(!RenderComponent);
-
-		// 렌더링 관련 컴포넌트라면 멤버 변수에 별도 기록
-		RenderComponent = NewRenderComponent;
+		// 스크립트 컴포넌트인 경우 별도 벡터에 추가
+		CScript* NewScript = dynamic_cast<CScript*>(Component);
+		Scripts.push_back(NewScript);
 	}
+	else
+	{
+		// 입력으로 들어온 컴포넌트를 이미 가지고 있는 경우
+		assert(!Components[static_cast<UINT>(Type)]);
 
-	// 입력된 컴포넌트를 배열의 알맞은 인덱스 자리에 주소값을 기록한다.
-	Components[static_cast<UINT>(type)] = Component;
+		// 입력된 컴포넌트가 렌더링 관련 컴포넌트인지 확인 
+		CRenderComponent* NewRenderComponent = dynamic_cast<CRenderComponent*>(Component);
+		if (NewRenderComponent)
+		{
+			// 이미 렌더링 관련 컴포넌트를 보유한 경우
+			assert(!RenderComponent);
+
+			// 렌더링 관련 컴포넌트라면 멤버 변수에 별도 기록
+			RenderComponent = NewRenderComponent;
+		}
+
+		// 입력된 컴포넌트를 배열의 알맞은 인덱스 자리에 주소값을 기록한다.
+		Components[static_cast<UINT>(Type)] = Component;
+	}
 
 	// 컴포넌트의 소유 오브젝트가 본인임을 알림
 	Component->Owner = this;

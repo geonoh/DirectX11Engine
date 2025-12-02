@@ -20,3 +20,5 @@ typedef Vector4 Vec4;
 #define KEY_PRESSED(Key) KEY_CHECK(Key, EKeyState::Pressed)
 #define KEY_RELEASED(Key) KEY_CHECK(Key, EKeyState::Released)
 #define KEY_NONE(Key) KEY_CHECK(Key, EKeyState::None)
+
+#define DT CTimeMgr::GetInst()->GetDeltaTime()

@@ -11,6 +11,7 @@
 
 #include "CGameObject.h"
 #include "CMeshRender.h"
+#include "CPlayerScript.h"
 #include "CTransform.h"
 
 static CGameObject* Object = nullptr;
@@ -20,6 +21,9 @@ int TempInit()
 	Object = new CGameObject;
 	Object->AddComponent(new CTransform);
 	Object->AddComponent(new CMeshRender);
+	Object->AddComponent(new CPlayerScript);
+	Object->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+
 	Object->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Object->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader"));
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "CEntity.h"
 
+class CScript;
 class CTransform;
 class CMeshRender;
 class CRenderComponent;
@@ -10,6 +11,7 @@ class CGameObject : public CEntity
 {
 	CComponent* Components[static_cast<UINT>(EComponentType::End)];
 	CRenderComponent* RenderComponent;
+	vector<CScript*> Scripts;
 
 public:
 	void Begin(); // 레벨이 시작될 때 호출, 레벨에 합류할 때
