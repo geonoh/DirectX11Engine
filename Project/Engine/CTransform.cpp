@@ -6,7 +6,6 @@
 
 void CTransform::FinalTick()
 {
-	Binding();
 }
 
 void CTransform::Binding() const
