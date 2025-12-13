@@ -8,11 +8,8 @@
 #include "CPathMgr.h"
 #include "CTimeMgr.h"
 
-#include "Temp.h"
-
 CEngine::~CEngine()
 {
-	TempRelease();
 }
 
 CEngine::CEngine()
