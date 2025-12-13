@@ -21,6 +21,9 @@ public:
     int Create(const Vtx* InVertexSystemMemory, size_t InVertexCount, const UINT* InIndexSystemMemory, size_t InIndexCount);
     void Render();
 
+    virtual int Load(const wstring& FilePath) override;
+	virtual int Save(const wstring& FilePath) override;
+
 public:
     CMesh();
     ~CMesh();

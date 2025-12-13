@@ -67,6 +67,16 @@ void CMesh::Render()
 	CONTEXT->DrawIndexed(IndexCount, 0, 0);
 }
 
+int CMesh::Load(const wstring& FilePath)
+{
+	return 0;
+}
+
+int CMesh::Save(const wstring& FilePath)
+{
+	return 0;
+}
+
 CMesh::CMesh()
 	: CAsset(EAssetType::Mesh), VertexBufferDesc(), VertexCount(0), VertexSystemMemory(nullptr), IndexBufferDesc(),
 	  IndexCount(0),

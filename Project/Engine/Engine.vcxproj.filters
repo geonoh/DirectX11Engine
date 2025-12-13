@@ -244,6 +244,9 @@
     <ClInclude Include="CLevelMgr.h">
       <Filter>04. Manager\05.LevelMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CTexture.h">
+      <Filter>08. Asset\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="CLevelMgr.cpp">
       <Filter>04. Manager\05.LevelMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CTexture.cpp">
+      <Filter>08. Asset\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

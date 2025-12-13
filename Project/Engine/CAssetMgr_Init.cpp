@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CAssetMgr.h"
 #include "CPathMgr.h"
+#include "CTexture.h"
 
 void CAssetMgr::init()
 {
@@ -98,6 +99,7 @@ void CAssetMgr::CreateDefaultMesh()
 
 void CAssetMgr::CreateDefaultTexture()
 {
+	Ptr<CTexture> Tex = Load<CTexture>(L"texture\\Character.png", L"texture\\Character.png");
 }
 
 void CAssetMgr::CreateDefaultMaterial()

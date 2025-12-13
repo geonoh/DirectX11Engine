@@ -12,11 +12,15 @@ private:
     void AddRef();
     void Release();
 
+private:
+    virtual int Load(const wstring& FilePath) = 0;
+    virtual int Save(const wstring& FilePath) = 0;
+
 public:
     const wstring& GetKey() const { return Key; }
     const wstring& GetRelativePath() const { return RelativePath; }
 	EAssetType GetAssetType() const { return Type; }
-
+    
     CAsset(EAssetType Type);
     CAsset(const CAsset& Other) = delete;
     virtual ~CAsset() override;

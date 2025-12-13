@@ -1,6 +1,8 @@
 #pragma once
 #include "CAsset.h"
 #include "assets.h"
+#include "CPathMgr.h"
+#include "CTexture.h"
 
 class CAssetMgr :
 	public CSingleton<CAssetMgr>
@@ -23,6 +25,9 @@ public:
 
 	template <typename T>
 	void AddAsset(const wstring& StrKey, Ptr<T> Asset);
+
+	template <typename T>
+	Ptr<T> Load(const wstring& StrKey, const wstring& RelativePath);
 };
 
 template <typename T>
@@ -39,6 +44,10 @@ EAssetType GetAssetType()
 	if constexpr (std::is_same_v<T, CGraphicShader>)
 	{
 		return EAssetType::GraphicsShader;
+	}
+	if constexpr (std::is_same_v<T, CTexture>)
+	{
+		return EAssetType::Texture;
 	}
 }
 
@@ -69,4 +78,26 @@ void CAssetMgr::AddAsset(const wstring& StrKey, Ptr<T> Asset)
 	const EAssetType Type = GetAssetType<T>();
 	AssetMap[static_cast<UINT>(Type)].insert(make_pair(StrKey, Asset.Get()));
 	Asset->Key = StrKey;
+}
+
+template <typename T>
+Ptr<T> CAssetMgr::Load(const wstring& StrKey, const wstring& RelativePath)
+{
+	Ptr<CAsset> FoundAsset = FindAsset<T>(StrKey).Get();
+	if (FoundAsset.Get())
+	{
+		return static_cast<T*>(FoundAsset.Get());
+	}
+
+	wstring FullPath = CPathMgr::GetInst()->GetContentPath();
+	FullPath += RelativePath;
+
+	FoundAsset = new T;
+	if (FAILED(FoundAsset->Load(FullPath)))
+	{
+		MessageBox(nullptr, FullPath.c_str(), L"에셋 로드 실패", MB_OK);
+		return nullptr;
+	}
+
+	return static_cast<T*>(FoundAsset.Get());
 }
