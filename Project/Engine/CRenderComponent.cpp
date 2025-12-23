@@ -2,15 +2,21 @@
 #include "CRenderComponent.h"
 #include "CMesh.h"
 #include "CGraphicShader.h"
+#include "CTexture.h"
 
-void CRenderComponent::SetMesh(const Ptr<CMesh>& InMesh)
+void CRenderComponent::SetMesh(Ptr<CMesh> InMesh)
 {
 	Mesh = InMesh;
 }
 
-void CRenderComponent::SetShader(const Ptr<CGraphicShader>& InShader)
+void CRenderComponent::SetShader(Ptr<CGraphicShader> InShader)
 {
 	Shader = InShader;
+}
+
+void CRenderComponent::SetTexture(Ptr<CTexture> InTexture)
+{
+	Texture = InTexture;
 }
 
 Ptr<CMesh> CRenderComponent::GetMesh()
@@ -21,6 +27,11 @@ Ptr<CMesh> CRenderComponent::GetMesh()
 Ptr<CGraphicShader> CRenderComponent::GetShader()
 {
 	return Shader;
+}
+
+Ptr<CTexture> CRenderComponent::GetTexture()
+{
+	return Texture;
 }
 
 CRenderComponent::CRenderComponent(const EComponentType Type) : CComponent(Type)

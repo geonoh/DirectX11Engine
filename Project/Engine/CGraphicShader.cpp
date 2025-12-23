@@ -46,7 +46,7 @@ int CGraphicShader::CreateVertexShader(const wstring& StrFilePath, const string&
 
 	// Layout 생성
 	// 정점 레이아웃 정보 만들기 (즉, Vtx의 구조)
-	D3D11_INPUT_ELEMENT_DESC LayoutDesc[2] = {};
+	D3D11_INPUT_ELEMENT_DESC LayoutDesc[3] = {};
 
 	LayoutDesc[0].AlignedByteOffset = 0;
 	LayoutDesc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT; // Vec3과 맞는 사이즈 강제로 맞춤;;; Vtx::vPos
@@ -64,9 +64,17 @@ int CGraphicShader::CreateVertexShader(const wstring& StrFilePath, const string&
 	LayoutDesc[1].SemanticName = "COLOR";
 	LayoutDesc[1].SemanticIndex = 0;
 
+	LayoutDesc[2].AlignedByteOffset = 28;
+	LayoutDesc[2].Format = DXGI_FORMAT_R32G32_FLOAT; // Vec4과 맞는 사이즈 강제로 맞춤, Vtx::vColor
+	LayoutDesc[2].InputSlot = 0;
+	LayoutDesc[2].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+	LayoutDesc[2].InstanceDataStepRate = 0;
+	LayoutDesc[2].SemanticName = "TEXCOORD";
+	LayoutDesc[2].SemanticIndex = 0;
+
 	if (FAILED(DEVICE->CreateInputLayout(
 		LayoutDesc,
-		2,
+		3,
 		VertexShaderBlob->GetBufferPointer(),
 		VertexShaderBlob->GetBufferSize(),
 		InputLayout.GetAddressOf())))

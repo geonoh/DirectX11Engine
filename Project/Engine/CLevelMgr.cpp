@@ -29,10 +29,11 @@ void CLevelMgr::Init()
 	Object->AddComponent(new CTransform);
 	Object->AddComponent(new CMeshRender);
 	Object->AddComponent(new CPlayerScript);
-	Object->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+	Object->Transform()->SetRelativeScale(0.66f, 1.f, 0.2f);
 
-	Object->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"CircleMesh"));
+	Object->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Object->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader"));
+	Object->MeshRender()->SetTexture(CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Character.png"));
 
 	CurrentLevel->AddObject(0, Object);
 }

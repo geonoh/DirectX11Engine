@@ -99,5 +99,7 @@ Ptr<T> CAssetMgr::Load(const wstring& StrKey, const wstring& RelativePath)
 		return nullptr;
 	}
 
+	AddAsset<T>(StrKey, static_cast<T*>(FoundAsset.Get()));
+
 	return static_cast<T*>(FoundAsset.Get());
 }

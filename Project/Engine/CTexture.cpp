@@ -64,3 +64,8 @@ CTexture::CTexture() : CAsset(EAssetType::Texture)
 CTexture::~CTexture()
 {
 }
+
+void CTexture::Binding(const int RegisterNum)
+{
+	CONTEXT->PSSetShaderResources(RegisterNum, 1, SRV.GetAddressOf());
+}

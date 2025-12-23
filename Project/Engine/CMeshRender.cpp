@@ -4,6 +4,7 @@
 #include "CGameObject.h"
 #include "CGraphicShader.h"
 #include "CMesh.h"
+#include "CTexture.h"
 #include "CTransform.h"
 
 void CMeshRender::FinalTick()
@@ -16,6 +17,8 @@ void CMeshRender::Render()
 	GetOwner()->Transform()->Binding();
 
 	GetShader()->Binding();
+	GetTexture()->Binding(0);
+
 	GetMesh()->Render();
 }
 
