@@ -20,6 +20,10 @@ private:
 	ComPtr<ID3D11Texture2D> DepthStencilTexture;
 	ComPtr<ID3D11DepthStencilView> DepthStencilView;
 
+	ComPtr<ID3D11SamplerState> SamplerState[2];
+	//ComPtr<ID3D11RasterizerState> RasterizerState;
+	//ComPtr<ID3D11BlendState> BlendState;
+	//ComPtr<ID3D11DepthStencilState> DepthStencilState;
 	CConstBuffer* ConstantBuffer[static_cast<UINT>(EConstantBufferType::End)];
 
 public:
@@ -42,6 +46,7 @@ private:
 	int CreateSwapChain();
 	int CreateView();
 	int CreateConstBuffer();
+	int CreateSamplerState();
 
 	static constexpr float MAX_DEPTH_VALUE = 1.f;
 };

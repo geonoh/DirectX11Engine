@@ -69,6 +69,12 @@ int CDevice::Init(const HWND HWnd, const POINT Resolution)
 		return E_FAIL;
 	}
 
+	// 필요한 샘플러 생성
+	if (FAILED(CreateSamplerState()))
+	{
+		return E_FAIL;
+	}
+
 	return S_OK;
 }
 
@@ -190,6 +196,26 @@ int CDevice::CreateConstBuffer()
 	ConstantBuffer[static_cast<UINT>(EConstantBufferType::Transform)] = new CConstBuffer;
 	ConstantBuffer[static_cast<UINT>(EConstantBufferType::Transform)]->Create(
 		sizeof(tTransform), EConstantBufferType::Transform);
+
+	return S_OK;
+}
+
+int CDevice::CreateSamplerState()
+{
+	D3D11_SAMPLER_DESC Desc[2]{};
+	Desc[0].AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	Desc[0].AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	Desc[0].AddressW = D3D11_TEXTURE_ADDRESS_WRAP; // 3차원 텍스쳐. 우리는 안쓰니 무시
+	Desc[0].Filter = D3D11_FILTER_ANISOTROPIC; // 이방성 필터
+	DEVICE->CreateSamplerState(Desc, SamplerState[0].GetAddressOf());
+	CONTEXT->PSSetSamplers(0, 1, SamplerState[0].GetAddressOf());
+
+	Desc[1].AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	Desc[1].AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	Desc[1].AddressW = D3D11_TEXTURE_ADDRESS_WRAP; // 3차원 텍스쳐. 우리는 안쓰니 무시
+	Desc[1].Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // 포인트 필터(보간 없음)
+	DEVICE->CreateSamplerState(Desc + 1, SamplerState[1].GetAddressOf());
+	CONTEXT->PSSetSamplers(1, 1, SamplerState[1].GetAddressOf());
 
 	return S_OK;
 }
