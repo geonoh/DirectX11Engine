@@ -54,6 +54,7 @@ void CAssetMgr::CreateDefaultMesh()
 	vecIdx.push_back(0);
 	vecIdx.push_back(2);
 	vecIdx.push_back(3);
+
 	vecIdx.push_back(0);
 	vecIdx.push_back(1);
 	vecIdx.push_back(2);

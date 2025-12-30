@@ -11,6 +11,7 @@ public:
     int CreatePixelShader(const wstring& StrFilePath, const string& PsFuncName);
 
     void SetTopology(D3D11_PRIMITIVE_TOPOLOGY InTopology);
+	void SetRasterizerType(ERasterizerType InType);
     virtual void Binding() override;
 
 private:
@@ -23,5 +24,7 @@ private:
     ComPtr<ID3D11InputLayout> InputLayout;
 
     D3D11_PRIMITIVE_TOPOLOGY Topology;
+
+	ERasterizerType RasterizerType;
 };
 

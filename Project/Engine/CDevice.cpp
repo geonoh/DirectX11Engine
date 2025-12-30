@@ -109,6 +109,11 @@ CConstBuffer* CDevice::GetConstBuffer(EConstantBufferType Type) const
 	return ConstantBuffer[static_cast<UINT>(Type)];
 }
 
+ComPtr<ID3D11RasterizerState> CDevice::GetRasterizerState(ERasterizerType Type) const
+{
+	return RasterizerState[static_cast<UINT>(Type)];
+}
+
 int CDevice::CreateSwapChain()
 {
 	// 스왑 이펙트에 따라서
@@ -216,6 +221,30 @@ int CDevice::CreateSamplerState()
 	Desc[1].Filter = D3D11_FILTER_MIN_MAG_MIP_POINT; // 포인트 필터(보간 없음)
 	DEVICE->CreateSamplerState(Desc + 1, SamplerState[1].GetAddressOf());
 	CONTEXT->PSSetSamplers(1, 1, SamplerState[1].GetAddressOf());
+
+	return S_OK;
+}
+
+int CDevice::CreateRasterizerState()
+{
+	// 비워두면 기본값이 적용된다. -> 뒷면 컬링
+	RasterizerState[static_cast<UINT>(ERasterizerType::CullBack)] = nullptr;
+
+	// 앞면 컬링
+	D3D11_RASTERIZER_DESC Desc = {};
+	Desc.CullMode = D3D11_CULL_FRONT;
+	Desc.FillMode = D3D11_FILL_SOLID;
+	DEVICE->CreateRasterizerState(&Desc, RasterizerState[static_cast<UINT>(ERasterizerType::CullFront)].GetAddressOf());
+
+	// 컬링 없음
+	Desc.CullMode = D3D11_CULL_NONE;
+	Desc.FillMode = D3D11_FILL_SOLID;
+	DEVICE->CreateRasterizerState(&Desc, RasterizerState[static_cast<UINT>(ERasterizerType::CullNone)].GetAddressOf());
+
+	// 와이어 프레임
+	Desc.CullMode = D3D11_CULL_NONE;
+	Desc.FillMode = D3D11_FILL_WIREFRAME;
+	DEVICE->CreateRasterizerState(&Desc, RasterizerState[static_cast<UINT>(ERasterizerType::WireFrame)].GetAddressOf());
 
 	return S_OK;
 }

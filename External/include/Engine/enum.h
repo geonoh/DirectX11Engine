@@ -43,3 +43,12 @@ enum class EConstantBufferType
 	Global,
 	End,
 };
+
+enum class ERasterizerType
+{
+	CullBack,
+	CullFront,
+	CullNone,
+	WireFrame,
+	End,
+};

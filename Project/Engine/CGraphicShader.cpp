@@ -3,7 +3,8 @@
 
 #include "CDevice.h"
 
-CGraphicShader::CGraphicShader() : CShader(EAssetType::GraphicsShader), Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+CGraphicShader::CGraphicShader() : CShader(EAssetType::GraphicsShader), Topology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST),
+                                   RasterizerType(ERasterizerType::CullBack)
 {
 }
 
@@ -127,11 +128,17 @@ void CGraphicShader::SetTopology(const D3D11_PRIMITIVE_TOPOLOGY InTopology)
 	Topology = InTopology;
 }
 
+void CGraphicShader::SetRasterizerType(const ERasterizerType InType)
+{
+	RasterizerType = InType;
+}
+
 void CGraphicShader::Binding()
 {
 	CONTEXT->IASetInputLayout(InputLayout.Get());
 	CONTEXT->IASetPrimitiveTopology(Topology);
 
 	CONTEXT->VSSetShader(VertexShader.Get(), nullptr, 0);
+	CONTEXT->RSSetState(CDevice::GetInst()->GetRasterizerState(RasterizerType).Get());
 	CONTEXT->PSSetShader(PixelShader.Get(), nullptr, 0);
 }
