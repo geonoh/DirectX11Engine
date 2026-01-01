@@ -75,6 +75,12 @@ int CDevice::Init(const HWND HWnd, const POINT Resolution)
 		return E_FAIL;
 	}
 
+	// 레스터라이저 생성
+	if (FAILED(CreateRasterizerState()))
+	{
+		return E_FAIL;
+	}
+
 	return S_OK;
 }
 

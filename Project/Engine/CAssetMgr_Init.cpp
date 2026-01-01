@@ -3,7 +3,7 @@
 #include "CPathMgr.h"
 #include "CTexture.h"
 
-void CAssetMgr::init()
+void CAssetMgr::Init()
 {
 	CreateDefaultMesh();
 
@@ -121,6 +121,7 @@ void CAssetMgr::CreateDefaultGraphicShader()
 	pShader = new CGraphicShader;
 	pShader->CreateVertexShader(strPath + L"shader\\std2d.fx", "VS_Std2D");
 	pShader->CreatePixelShader(strPath + L"shader\\std2d.fx", "PS_Std2D");
+	pShader->SetRasterizerType(ERasterizerType::CullNone); // 2D라서 컬링이 따로 필요없다
 
 	AddAsset<CGraphicShader>(L"Std2DShader", pShader);
 }

@@ -39,7 +39,7 @@ int CEngine::Init(const HWND InHwnd, const POINT InResolution)
 	CPathMgr::GetInst()->Init();
 	CTimeMgr::GetInst()->Init();
 	CKeyMgr::GetInst()->Init();
-	CAssetMgr::GetInst()->init();
+	CAssetMgr::GetInst()->Init();
 	CLevelMgr::GetInst()->Init();
 
 	return S_OK;

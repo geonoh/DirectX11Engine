@@ -13,7 +13,7 @@ private:
 	map<wstring, Ptr<CAsset>> AssetMap[static_cast<UINT>(EAssetType::End)];
 
 public:
-	void init();
+	void Init();
 	void CreateDefaultMesh();
 	void CreateDefaultTexture();
 	void CreateDefaultMaterial();
