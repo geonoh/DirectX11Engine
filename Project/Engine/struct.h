@@ -11,6 +11,5 @@ struct Vtx
 // 상수버퍼 관련 구조체
 struct tTransform
 {
-	Vec4 Position;
-	Vec4 Scale;
+	Matrix WorldMatrix;
 };

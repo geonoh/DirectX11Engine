@@ -3,8 +3,8 @@
 
 cbuffer TRANSFORM : register(b0)
 {
-    float4 g_Position;
-    float4 g_Scale;
+    row_major matrix g_WorldMatrix;
+	// GPU가 행렬을 읽을 때, 세로로 읽기 때문에 row_major를 붙여준다
 }
 
 SamplerState g_sampler0 : register(s0);
@@ -35,7 +35,8 @@ VS_OUT VS_Std2D(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0.f;
 
-    output.vPosition = float4((_in.vPos * g_Scale.xyz) + g_Position.xyz, 1.f);
+    // 행렬을 곱할 때, 3차원 좌표를 4차원으로 확장
+    output.vPosition = mul(float4(_in.vPos, 1.f), g_WorldMatrix);
     output.vColor = _in.vColor;
     output.vUV = _in.vUV;
     return output;

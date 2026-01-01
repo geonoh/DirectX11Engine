@@ -6,6 +6,7 @@ class CTransform : public CComponent
 	Vec3 RelativePos;
 	Vec3 RelativeScale;
 	Vec3 RelativeRotation;
+	Matrix WorldMatrix;
 
 public:
 	virtual void FinalTick() override;
