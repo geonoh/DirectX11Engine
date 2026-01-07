@@ -3,8 +3,10 @@
 
 cbuffer TRANSFORM : register(b0)
 {
-    row_major matrix g_WorldMatrix;
 	// GPU가 행렬을 읽을 때, 세로로 읽기 때문에 row_major를 붙여준다
+    row_major matrix g_WorldMatrix;
+    row_major matrix g_ViewMatrix; // 카메라가 세팅해준다
+
 }
 
 SamplerState g_sampler0 : register(s0);

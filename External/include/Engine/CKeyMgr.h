@@ -8,6 +8,11 @@ enum class EKey
     A,
     D,
 
+    Z,
+    X,
+    C,
+    V,
+
     _0,
     _1,
     _2,

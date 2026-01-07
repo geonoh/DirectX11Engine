@@ -8,6 +8,11 @@ UINT KeyValues[static_cast<int>(EKey::KEY_END)] =
 	'A',
 	'D',
 
+	'Z',
+	'X',
+	'C',
+	'V',
+
 	'0',
 	'1',
 	'2',

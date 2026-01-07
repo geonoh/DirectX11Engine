@@ -8,5 +8,6 @@ public:
 	virtual ~CCamera() override;
 
 private:
+	Matrix ViewMatrix;
 };
 

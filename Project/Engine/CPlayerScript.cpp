@@ -36,5 +36,13 @@ void CPlayerScript::Tick()
 		CurPos.x += DT * Speed;
 	}
 
+	if (KEY_PRESSED(EKey::Z))
+	{
+		Vec3 Rotation = GetOwner()->Transform()->GetRelativeRotation();
+		Rotation.z += DT * XM_PI;
+
+		GetOwner()->Transform()->SetRelativeRotation(Rotation);
+	}
+
 	GetOwner()->Transform()->SetRelativePos(CurPos);
 }

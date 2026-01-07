@@ -12,4 +12,5 @@ struct Vtx
 struct tTransform
 {
 	Matrix WorldMatrix;
+	Matrix ViewMatrix;
 };

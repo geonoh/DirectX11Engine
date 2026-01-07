@@ -8,15 +8,24 @@ void CTransform::FinalTick()
 {
 	WorldMatrix = XMMatrixIdentity();
 
-	// Scale
-	WorldMatrix._11 = RelativeScale.x;
-	WorldMatrix._22 = RelativeScale.y;
-	WorldMatrix._33 = RelativeScale.z;
+	Matrix Scale = XMMatrixIdentity();
+	Scale._11 = RelativeScale.x;
+	Scale._22 = RelativeScale.y;
+	Scale._33 = RelativeScale.z;
 
-	// Translate
-	WorldMatrix._41 = RelativePos.x;
-	WorldMatrix._42 = RelativePos.y;
-	WorldMatrix._43 = RelativePos.z;
+	Matrix Rotation = XMMatrixIdentity();
+	Rotation._11 = cosf(RelativeRotation.z);
+	Rotation._12 = sinf(RelativeRotation.z);
+	Rotation._21 = -sinf(RelativeRotation.z);
+	Rotation._22 = cosf(RelativeRotation.z);
+
+
+	Matrix Translation = XMMatrixIdentity();
+	Translation._41 = RelativePos.x;
+	Translation._42 = RelativePos.y;
+	Translation._43 = RelativePos.z;
+
+	WorldMatrix = Scale * Rotation * Translation;
 }
 
 void CTransform::Binding() const
