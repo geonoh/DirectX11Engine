@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CGameObject.h"
 
+#include "CCamera.h"
 #include "CComponent.h"
 #include "CMeshRender.h"
 #include "CRenderComponent.h"
@@ -122,6 +123,11 @@ CTransform* CGameObject::Transform() const
 CMeshRender* CGameObject::MeshRender() const
 {
 	return dynamic_cast<CMeshRender*>(Components[static_cast<UINT>(EComponentType::MeshRender)]);
+}
+
+CCamera* CGameObject::Camera() const
+{
+	return dynamic_cast<CCamera*>(Components[static_cast<UINT>(EComponentType::Camera)]);
 }
 
 CGameObject::CGameObject() : Components{}, RenderComponent(nullptr)

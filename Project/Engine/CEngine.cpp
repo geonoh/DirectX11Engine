@@ -6,6 +6,7 @@
 #include "CKeyMgr.h"
 #include "CLevelMgr.h"
 #include "CPathMgr.h"
+#include "CRenderMgr.h"
 #include "CTimeMgr.h"
 
 CEngine::~CEngine()
@@ -41,6 +42,7 @@ int CEngine::Init(const HWND InHwnd, const POINT InResolution)
 	CKeyMgr::GetInst()->Init();
 	CAssetMgr::GetInst()->Init();
 	CLevelMgr::GetInst()->Init();
+	CRenderMgr::GetInst()->Init();
 
 	return S_OK;
 }
@@ -55,12 +57,5 @@ void CEngine::Progress()
 	CLevelMgr::GetInst()->Tick();
 
 	// Rendering
-	// Target Clear
-	constexpr float ClearColor[4] = {0.3f, 0.3f, 0.3f, 1.f};
-	CDevice::GetInst()->ClearTarget(ClearColor);
-
-	// Object Render
-	CLevelMgr::GetInst()->Render();
-
-	CDevice::GetInst()->Present();
+	CRenderMgr::GetInst()->Render();
 }

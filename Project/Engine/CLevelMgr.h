@@ -14,4 +14,5 @@ public:
 	void Init();
 	void Tick();
 	void Render();
+	CLevel* GetCurrentLevel() const;
 };

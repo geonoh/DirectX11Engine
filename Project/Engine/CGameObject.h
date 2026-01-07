@@ -1,6 +1,7 @@
 #pragma once
 #include "CEntity.h"
 
+class CCamera;
 class CScript;
 class CTransform;
 class CMeshRender;
@@ -24,6 +25,7 @@ public:
 
 	CTransform* Transform() const;
 	CMeshRender* MeshRender() const;
+	CCamera* Camera() const;
 
 	CGameObject();
 	virtual ~CGameObject() override;

@@ -56,3 +56,12 @@ void CLevel::Render()
 		Layer->Render();
 	}
 }
+
+CLayer* CLevel::GetLayer(const int LayerIndex) const
+{
+	if (LayerIndex < 0 || LayerIndex >= MAX_LAYER)
+	{
+		return nullptr;
+	}
+	return Layers[LayerIndex];
+}

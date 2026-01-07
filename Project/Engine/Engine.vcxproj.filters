@@ -137,6 +137,9 @@
     <Filter Include="04. Manager\05.LevelMgr">
       <UniqueIdentifier>{3f2a00f0-07cc-4b8f-b820-d1ea91157499}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Manager\06.RenderMgr">
+      <UniqueIdentifier>{53383f85-fe9b-4f7d-8922-063fa2792d76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -250,6 +253,7 @@
     <ClInclude Include="CCamera.h">
       <Filter>07. Component\02. Camera</Filter>
     </ClInclude>
+    <ClInclude Include="CRenderMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -336,6 +340,7 @@
     <ClCompile Include="CCamera.cpp">
       <Filter>07. Component\02. Camera</Filter>
     </ClCompile>
+    <ClCompile Include="CRenderMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">

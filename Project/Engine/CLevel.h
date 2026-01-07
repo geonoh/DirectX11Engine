@@ -16,6 +16,7 @@ public:
 	void Tick();
 	void FinalTick();
 	void Render();
+	CLayer* GetLayer(int LayerIndex) const;
 
 private:
 	CLayer* Layers[MAX_LAYER];
