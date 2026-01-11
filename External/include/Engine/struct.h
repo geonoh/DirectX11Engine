@@ -14,3 +14,5 @@ struct tTransform
 	Matrix WorldMatrix;
 	Matrix ViewMatrix;
 };
+
+extern tTransform GlobalTransform;

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CLevelMgr.h"
 
+#include "CCameraMoveScript.h"
 #include "CAssetMgr.h"
 #include "components.h"
 #include "CGameObject.h"
@@ -28,6 +29,7 @@ void CLevelMgr::Init()
 	MainCameraObject->SetName(L"MainCamera");
 	MainCameraObject->AddComponent(new CTransform);
 	MainCameraObject->AddComponent(new CCamera);
+	MainCameraObject->AddComponent(new CCameraMoveScript);
 	MainCameraObject->Camera()->SetPriority(0); // 메인 카메라로 설정
 	CurrentLevel->AddObject(0, MainCameraObject);
 

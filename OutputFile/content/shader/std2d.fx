@@ -37,8 +37,11 @@ VS_OUT VS_Std2D(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0.f;
 
+    float4 WorldPos = mul(float4(_in.vPos, 1.f), g_WorldMatrix);
+    float4 ViewPos = mul(WorldPos, g_ViewMatrix);
+
     // 행렬을 곱할 때, 3차원 좌표를 4차원으로 확장
-    output.vPosition = mul(float4(_in.vPos, 1.f), g_WorldMatrix);
+    output.vPosition = ViewPos;
     output.vColor = _in.vColor;
     output.vUV = _in.vUV;
     return output;

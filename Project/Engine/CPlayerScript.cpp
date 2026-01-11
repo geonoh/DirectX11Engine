@@ -19,19 +19,19 @@ void CPlayerScript::Tick()
 	// 키 입력에 따른 위치이동
 	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 
-	if (KEY_PRESSED(EKey::W))
+	if (KEY_PRESSED(EKey::UP))
 	{
 		CurPos.y += DT * Speed;
 	}
-	if (KEY_PRESSED(EKey::S))
+	if (KEY_PRESSED(EKey::DOWN))
 	{
 		CurPos.y -= DT * Speed;
 	}
-	if (KEY_PRESSED(EKey::A))
+	if (KEY_PRESSED(EKey::LEFT))
 	{
 		CurPos.x -= DT * Speed;
 	}
-	if (KEY_PRESSED(EKey::D))
+	if (KEY_PRESSED(EKey::RIGHT))
 	{
 		CurPos.x += DT * Speed;
 	}

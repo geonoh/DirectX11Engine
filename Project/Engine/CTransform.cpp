@@ -18,10 +18,10 @@ void CTransform::FinalTick()
 void CTransform::Binding() const
 {
 	CConstBuffer* ConstBuffer = CDevice::GetInst()->GetConstBuffer(EConstantBufferType::Transform);
-	tTransform trans = {};
-	trans.WorldMatrix = WorldMatrix;
 
-	ConstBuffer->SetData(&trans);
+	GlobalTransform.WorldMatrix = WorldMatrix;
+
+	ConstBuffer->SetData(&GlobalTransform);
 	ConstBuffer->Binding();
 }
 
