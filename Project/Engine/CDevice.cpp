@@ -8,7 +8,7 @@ CDevice::~CDevice()
 	Safe_Del_Array(ConstantBuffer);
 }
 
-int CDevice::Init(const HWND HWnd, const POINT Resolution)
+int CDevice::Init(const HWND HWnd, const Vec2 Resolution)
 {
 	MainHwnd = HWnd;
 	RenderResolution = Resolution;
@@ -98,6 +98,11 @@ void CDevice::ClearTarget(const float (&ArrColor)[4]) const
 void CDevice::Present() const
 {
 	SwapChain->Present(0, 0);
+}
+
+Vec2 CDevice::GetRenderResolution() const
+{
+	return RenderResolution;
 }
 
 ID3D11Device* CDevice::GetDevice() const

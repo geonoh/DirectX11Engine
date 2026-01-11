@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CCamera.h"
 
+#include "CDevice.h"
 #include "CGameObject.h"
 #include "CLayer.h"
 #include "CLevel.h"
@@ -22,13 +23,17 @@ void CCamera::FinalTick()
 	const Vec3 CameraWorldPosition = GetOwner()->Transform()->GetRelativePos();
 	ViewMatrix = XMMatrixTranslation(-CameraWorldPosition.x, -CameraWorldPosition.y, -CameraWorldPosition.z);
 
-
 	// Projection 행렬 계산
+	constexpr float Fov = (XM_PI / 3.f); // Fov 60도
+	const Vec2 RenderResolution =	CDevice::GetInst()->GetRenderResolution();
+	const float AspectRatio = RenderResolution.x / RenderResolution.y;
+	ProjectionMatrix = XMMatrixPerspectiveFovLH(Fov, AspectRatio, 1.f, FarValue);
 }
 
 void CCamera::Render()
 {
 	GlobalTransform.ViewMatrix = ViewMatrix;
+	GlobalTransform.ProjectionMatrix = ProjectionMatrix;
 
 	const CLevel* CurrentLevel = CLevelMgr::GetInst()->GetCurrentLevel();;
 	if (!CurrentLevel)

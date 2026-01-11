@@ -13,7 +13,8 @@ public:
 
 private:
 	int Priority = INVALID_CAMERA_PRIORITY; // RenderMgr에 등록될 때 우선순위(0 : 메인 카메라, 0보다 큰 경우 : 서브 카메라)
-	 
+
+	float FarValue = 1000.f; // Depth Stencil을 1을 최대로 했으므로, 1000에 가까울수록 depthStencil은 1로 판단
 	Matrix ViewMatrix;
 	Matrix ProjectionMatrix;
 

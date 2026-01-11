@@ -19,7 +19,7 @@ CEngine::CEngine()
 {
 }
 
-int CEngine::Init(const HWND InHwnd, const POINT InResolution)
+int CEngine::Init(const HWND InHwnd, const Vec2 InResolution)
 {
 	MainHwnd = InHwnd;
 	Resolution = InResolution;

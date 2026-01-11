@@ -4,7 +4,7 @@ class CCameraMoveScript :
     public CScript
 {
 private:
-    float Speed = 1.f;
+    float Speed = 100.f;
 
 public:
     CCameraMoveScript();

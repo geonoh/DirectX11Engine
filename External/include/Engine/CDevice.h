@@ -9,7 +9,7 @@ class CDevice : public CSingleton<CDevice>
 
 private:
 	HWND MainHwnd;
-	POINT RenderResolution;
+	Vec2 RenderResolution;
 
 	ComPtr<ID3D11Device> Device;	// GPU 메모리 할당, Dx11 관련 객체 생성
 	ComPtr<ID3D11DeviceContext> DeviceContext; // GPU 랜더링 관련 명령
@@ -35,9 +35,11 @@ public:
 	}
 
 public:
-	int Init(HWND HWnd, POINT Resolution);
+	int Init(HWND HWnd, Vec2 Resolution);
 	void ClearTarget(const float(&ArrColor)[4]) const;
 	void Present() const;
+
+	Vec2 GetRenderResolution() const;
 
 	ID3D11Device* GetDevice() const;
 	ID3D11DeviceContext* GetContext() const;

@@ -6,7 +6,7 @@ cbuffer TRANSFORM : register(b0)
 	// GPU가 행렬을 읽을 때, 세로로 읽기 때문에 row_major를 붙여준다
     row_major matrix g_WorldMatrix;
     row_major matrix g_ViewMatrix; // 카메라가 세팅해준다
-
+    row_major matrix g_ProjectionMatrix;
 }
 
 SamplerState g_sampler0 : register(s0);
@@ -39,9 +39,12 @@ VS_OUT VS_Std2D(VS_IN _in)
 
     float4 WorldPos = mul(float4(_in.vPos, 1.f), g_WorldMatrix);
     float4 ViewPos = mul(WorldPos, g_ViewMatrix);
+    float4 ProjectionPos = mul(ViewPos, g_ProjectionMatrix);
+
+    // - 원래대로라면 w자리에 있는 값으로 x,y,z를 나눠야 하지만, 레스터 라이저에서 알아서 나눠줌
 
     // 행렬을 곱할 때, 3차원 좌표를 4차원으로 확장
-    output.vPosition = ViewPos;
+    output.vPosition = ProjectionPos;
     output.vColor = _in.vColor;
     output.vUV = _in.vUV;
     return output;

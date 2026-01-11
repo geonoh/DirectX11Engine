@@ -38,7 +38,8 @@ void CLevelMgr::Init()
 	PlayerObject->AddComponent(new CTransform);
 	PlayerObject->AddComponent(new CMeshRender);
 	PlayerObject->AddComponent(new CPlayerScript);
-	PlayerObject->Transform()->SetRelativeScale(.5f, .5f, 0.2f);
+	PlayerObject->Transform()->SetRelativePos(0.f, 0.f, 100.f);
+	PlayerObject->Transform()->SetRelativeScale(100.f, 100.f, 0.5f);
 
 	PlayerObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	PlayerObject->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader"));

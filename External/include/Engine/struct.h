@@ -13,6 +13,7 @@ struct tTransform
 {
 	Matrix WorldMatrix;
 	Matrix ViewMatrix;
+	Matrix ProjectionMatrix;
 };
 
 extern tTransform GlobalTransform;
