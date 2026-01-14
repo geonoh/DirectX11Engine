@@ -12,6 +12,7 @@ enum class EKey
     X,
     C,
     V,
+    Y,
 
     _0,
     _1,

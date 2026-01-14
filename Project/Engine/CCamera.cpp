@@ -21,7 +21,19 @@ void CCamera::FinalTick()
 {
 	// View 행결 계산
 	const Vec3 CameraWorldPosition = GetOwner()->Transform()->GetRelativePos();
-	ViewMatrix = XMMatrixTranslation(-CameraWorldPosition.x, -CameraWorldPosition.y, -CameraWorldPosition.z);
+	const Matrix ViewTranslate = XMMatrixTranslation(-CameraWorldPosition.x, -CameraWorldPosition.y, -CameraWorldPosition.z);;
+
+	const Vec3 Right = Transform()->GetRelativeDirection(EDirectionType::Right);
+	const Vec3 Up = Transform()->GetRelativeDirection(EDirectionType::Up);
+	const Vec3 Front = Transform()->GetRelativeDirection(EDirectionType::Front);
+
+	Matrix ViewRotation = XMMatrixIdentity();
+	ViewRotation._11 = Right.x;	ViewRotation._12 = Up.x;	ViewRotation._13 = Front.x;
+	ViewRotation._21 = Right.y;	ViewRotation._22 = Up.y;	ViewRotation._23 = Front.y;
+	ViewRotation._31 = Right.z;	ViewRotation._32 = Up.z;	ViewRotation._33 = Front.z;
+
+	// 이동 먼저하는게 중요하다
+	ViewMatrix = ViewTranslate * ViewRotation;
 
 	// Projection 행렬 계산
 	constexpr float Fov = (XM_PI / 3.f); // Fov 60도

@@ -13,6 +13,17 @@ void CTransform::FinalTick()
 	const Matrix Translation = XMMatrixTranslation(RelativePos.x, RelativePos.y, RelativePos.z);
 
 	WorldMatrix = Scale * Rotation * Translation;
+
+	// 오브젝트의 방향정보 계산
+	RelativeDirection[static_cast<int>(EDirectionType::Right)] = XAxis;
+	RelativeDirection[static_cast<int>(EDirectionType::Up)] = YAxis;
+	RelativeDirection[static_cast<int>(EDirectionType::Front)] = ZAxis;
+
+	for (Vec3& Direction : RelativeDirection)
+	{
+		Direction = XMVector3TransformNormal(Direction, Rotation);
+		Direction.Normalize();
+	}
 }
 
 void CTransform::Binding() const

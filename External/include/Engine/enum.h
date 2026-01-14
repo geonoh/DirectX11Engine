@@ -52,3 +52,14 @@ enum class ERasterizerType
 	WireFrame,
 	End,
 };
+
+enum class EDirectionType
+{
+	Right,
+	Up,
+	Front,
+};
+
+extern Vec3 XAxis;
+extern Vec3 YAxis;
+extern Vec3 ZAxis;

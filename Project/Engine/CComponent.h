@@ -1,5 +1,8 @@
 #pragma once
 #include "CEntity.h"
+class CCamera;
+class CMeshRender;
+class CTransform;
 class CGameObject;
 
 class CComponent :
@@ -17,6 +20,10 @@ public:
 public:
     EComponentType GetComponentType() const;
 	CGameObject* GetOwner() const { return Owner; }
+
+	CTransform* Transform() const;
+	CMeshRender* MeshRender() const;
+	CCamera* Camera() const;
 
 public:
     CComponent(EComponentType InType);
