@@ -30,6 +30,7 @@ void CTransform::Binding() const
 {
 	CConstBuffer* ConstBuffer = CDevice::GetInst()->GetConstBuffer(EConstantBufferType::Transform);
 
+	// CCamera에서 이미 뷰, 프로젝션 행렬을 곱해주기 때문에 여기서는 월드 행렬만 전달
 	GlobalTransform.WorldMatrix = WorldMatrix;
 
 	ConstBuffer->SetData(&GlobalTransform);
