@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CKeyMgr.h"
 
+#include "CEngine.h"
+
 UINT KeyValues[static_cast<int>(EKey::KEY_END)] =
 {
 	'W',
@@ -29,6 +31,9 @@ UINT KeyValues[static_cast<int>(EKey::KEY_END)] =
 	VK_RIGHT,
 	VK_UP,
 	VK_DOWN,
+
+	VK_LBUTTON,
+	VK_RBUTTON,
 
 	VK_RETURN,
 	VK_ESCAPE,
@@ -95,9 +100,35 @@ void CKeyMgr::Tick()
 			Keys[i].PrevPressed = false;
 		}
 	}
+
+	// 마우스 좌표 갱신
+	PreviousMousePosition = CurrentMousePosition;
+
+	POINT NewMousePosition{ };
+	GetCursorPos(&NewMousePosition);
+	ScreenToClient(CEngine::GetInst()->GetMainWnd(), &NewMousePosition);
+	CurrentMousePosition = Vec2(static_cast<float>(NewMousePosition.x), static_cast<float>(NewMousePosition.y));
+	DragDirection = CurrentMousePosition - PreviousMousePosition;
+	DragDirection.y *= -1.0f; // 윈도우는 아래방향이 +y 이므로 반대로 바꿔줌
+	DragDirection.Normalize();
 }
 
 EKeyState CKeyMgr::GetKeyState(const EKey InKey) const
 {
 	return Keys[static_cast<int>(InKey)].State;
+}
+
+Vec2 CKeyMgr::GetMousePosition() const
+{
+	return CurrentMousePosition;
+}
+
+Vec2 CKeyMgr::GetPreviousMousePosition()
+{
+	return PreviousMousePosition;
+}
+
+Vec2 CKeyMgr::GetMouseDragDirection() const
+{
+	return DragDirection;
 }

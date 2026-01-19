@@ -30,6 +30,9 @@ enum class EKey
     UP,
     DOWN,
 
+	LeftMouseButtonClicked,
+	RightMouseButtonClicked,
+
     ENTER,
     ESC,
     SPACE,
@@ -60,11 +63,17 @@ class CKeyMgr :
     SINGLE(CKeyMgr)
 private:
     vector<KeyInfo> Keys;
+    Vec2 CurrentMousePosition;
+    Vec2 PreviousMousePosition;
+    Vec2 DragDirection;
 
 public:
     void Init();
     void Tick();
 
     EKeyState GetKeyState(EKey InKey) const;
+	Vec2 GetMousePosition() const;
+    Vec2 GetPreviousMousePosition();
+	Vec2 GetMouseDragDirection() const;
 };
 

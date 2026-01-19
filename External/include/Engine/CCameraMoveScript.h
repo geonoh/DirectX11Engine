@@ -5,6 +5,7 @@ class CCameraMoveScript :
 {
 private:
     float Speed = 100.f;
+    static constexpr float ROTATION_SPEED = 20.f;
 
 public:
     CCameraMoveScript();
