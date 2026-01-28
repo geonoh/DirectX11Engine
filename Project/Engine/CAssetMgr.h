@@ -49,6 +49,10 @@ EAssetType GetAssetType()
 	{
 		return EAssetType::Texture;
 	}
+	if constexpr (std::is_same_v<T, CMaterial>)
+	{
+		return EAssetType::Material;
+	}
 }
 
 template <typename T>

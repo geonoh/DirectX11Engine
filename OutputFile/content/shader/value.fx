@@ -1,0 +1,46 @@
+#ifndef _VALUE
+#define _VALUE
+
+cbuffer TRANSFORM : register(b0)
+{
+	// GPU가 행렬을 읽을 때, 세로로 읽기 때문에 row_major를 붙여준다
+    row_major matrix g_WorldMatrix;
+    row_major matrix g_ViewMatrix; // 카메라가 세팅해준다
+    row_major matrix g_ProjectionMatrix;
+}
+
+cbuffer MATERIAL_CONST : register(b1)
+{
+	// 재질 관련 상수들 (배열은 16바이트 단위로 움직이기때문에 4개 단위로 맞춰줘야함)
+	int g_int_0;
+	int g_int_1;
+	int g_int_2;
+	int g_int_3;
+
+	float g_float_0;
+	float g_float_1;
+	float g_float_2;
+	float g_float_3;
+
+	float2 g_vec2_0;
+	float2 g_vec2_1;
+	float2 g_vec2_2;
+	float2 g_vec2_3;
+
+	float4 g_vec4_0;
+	float4 g_vec4_1;
+	float4 g_vec4_2;
+	float4 g_vec4_3;
+
+	matrix g_mat_0;
+	matrix g_mat_1;
+	matrix g_mat_2;
+	matrix g_mat_3;
+}
+
+SamplerState g_sampler0 : register(s0);
+SamplerState g_sampler1 : register(s1);
+
+Texture2D g_tex : register(t0);
+
+#endif

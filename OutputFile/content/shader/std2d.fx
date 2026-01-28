@@ -1,18 +1,7 @@
 #ifndef _STD2D // Pragma once와 같은 효과
 #define _STD2D
 
-cbuffer TRANSFORM : register(b0)
-{
-	// GPU가 행렬을 읽을 때, 세로로 읽기 때문에 row_major를 붙여준다
-    row_major matrix g_WorldMatrix;
-    row_major matrix g_ViewMatrix; // 카메라가 세팅해준다
-    row_major matrix g_ProjectionMatrix;
-}
-
-SamplerState g_sampler0 : register(s0);
-SamplerState g_sampler1 : register(s1);
-
-Texture2D g_tex : register(t0);
+#include "value.fx"
 
 struct VS_IN
 {
@@ -52,7 +41,18 @@ VS_OUT VS_Std2D(VS_IN _in)
 
 float4 PS_Std2D(VS_OUT _in) : SV_Target
 {
-    float4 vColor = g_tex.Sample(g_sampler0, _in.vUV);
+    float4 vColor = (float4) 0.f;
+
+    if (g_int_0 == 0)
+    {
+        vColor = g_tex.Sample(g_sampler0, _in.vUV);
+    }
+
+    else if (g_int_0 == 1)
+    {
+        vColor = float4(1.f, 1.f, 0.f, 1.f);
+    }
+
     return vColor;
 }
 

@@ -43,4 +43,8 @@ void CConstBuffer::SetData(const void* Data) const
 void CConstBuffer::Binding()
 {
 	CONTEXT->VSSetConstantBuffers(static_cast<UINT>(ConstantBufferType), 1, ConstantBuffer.GetAddressOf());
+	//CONTEXT->DSSetConstantBuffers(static_cast<UINT>(ConstantBufferType), 1, ConstantBuffer.GetAddressOf());
+	//CONTEXT->HSSetConstantBuffers(static_cast<UINT>(ConstantBufferType), 1, ConstantBuffer.GetAddressOf());
+	//CONTEXT->GSSetConstantBuffers(static_cast<UINT>(ConstantBufferType), 1, ConstantBuffer.GetAddressOf());
+	CONTEXT->PSSetConstantBuffers(static_cast<UINT>(ConstantBufferType), 1, ConstantBuffer.GetAddressOf());
 }

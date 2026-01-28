@@ -2,6 +2,7 @@
 #include "CDevice.h"
 
 #include "CConstBuffer.h"
+#include "CMaterial.h"
 
 CDevice::~CDevice()
 {
@@ -212,6 +213,10 @@ int CDevice::CreateConstBuffer()
 	ConstantBuffer[static_cast<UINT>(EConstantBufferType::Transform)] = new CConstBuffer;
 	ConstantBuffer[static_cast<UINT>(EConstantBufferType::Transform)]->Create(
 		sizeof(tTransform), EConstantBufferType::Transform);
+
+	ConstantBuffer[static_cast<UINT>(EConstantBufferType::Material)] = new CConstBuffer;
+	ConstantBuffer[static_cast<UINT>(EConstantBufferType::Material)]->Create(
+		sizeof(tMaterialConst), EConstantBufferType::Material);
 
 	return S_OK;
 }

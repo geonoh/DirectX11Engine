@@ -9,14 +9,9 @@ void CRenderComponent::SetMesh(Ptr<CMesh> InMesh)
 	Mesh = InMesh;
 }
 
-void CRenderComponent::SetShader(Ptr<CGraphicShader> InShader)
+void CRenderComponent::SetMaterial(Ptr<CMaterial> InMaterial)
 {
-	Shader = InShader;
-}
-
-void CRenderComponent::SetTexture(Ptr<CTexture> InTexture)
-{
-	Texture = InTexture;
+	Material = InMaterial;
 }
 
 Ptr<CMesh> CRenderComponent::GetMesh()
@@ -24,14 +19,9 @@ Ptr<CMesh> CRenderComponent::GetMesh()
 	return Mesh;
 }
 
-Ptr<CGraphicShader> CRenderComponent::GetShader()
+Ptr<CMaterial> CRenderComponent::GetMaterial()
 {
-	return Shader;
-}
-
-Ptr<CTexture> CRenderComponent::GetTexture()
-{
-	return Texture;
+	return Material;
 }
 
 CRenderComponent::CRenderComponent(const EComponentType Type) : CComponent(Type)

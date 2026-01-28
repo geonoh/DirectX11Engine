@@ -2,9 +2,8 @@
 #include "CMeshRender.h"
 
 #include "CGameObject.h"
-#include "CGraphicShader.h"
+#include "CMaterial.h"
 #include "CMesh.h"
-#include "CTexture.h"
 #include "CTransform.h"
 
 void CMeshRender::FinalTick()
@@ -16,8 +15,7 @@ void CMeshRender::Render()
 	// 오브젝트의 위치값을 상수버퍼를 통해서 바인딩
 	GetOwner()->Transform()->Binding();
 
-	GetShader()->Binding();
-	GetTexture()->Binding(0);
+	GetMaterial()->Binding();
 
 	GetMesh()->Render();
 }

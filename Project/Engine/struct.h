@@ -17,3 +17,12 @@ struct tTransform
 };
 
 extern tTransform GlobalTransform;
+
+struct tMaterialConst
+{
+	int IntArray[4];
+	float FloatArray[4];
+	Vec2 Vec2Array[4];
+	Vec4 Vec4Array[4];
+	Matrix MatrixArray[4];
+};

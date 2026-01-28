@@ -42,8 +42,7 @@ void CLevelMgr::Init()
 	PlayerObject->Transform()->SetRelativeScale(100.f, 100.f, 0.5f);
 
 	PlayerObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	PlayerObject->MeshRender()->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicShader>(L"Std2DShader"));
-	PlayerObject->MeshRender()->SetTexture(CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Character.png"));
+	PlayerObject->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMaterial"));
 
 	CurrentLevel->AddObject(0, PlayerObject);
 }
