@@ -12,6 +12,7 @@ public:
 	~CTexture();
 
 	void Binding(int RegisterNum);
+	static void Clear(int RegisterNum);
 
 private:
 	ScratchImage Image;

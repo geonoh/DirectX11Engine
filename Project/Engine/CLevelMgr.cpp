@@ -43,6 +43,16 @@ void CLevelMgr::Init()
 
 	PlayerObject->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	PlayerObject->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMaterial"));
+	//PlayerObject->MeshRender()->GetMaterial()->SetScalarParam(ScalarParam::Int_0, 0);
+	//PlayerObject->MeshRender()->GetMaterial()->SetScalarParam(ScalarParam::Vec4_3, Vec4(0, 3.14, 0, 0));
+	Matrix Mat;
+	Mat._44 = 2.1f;
+	PlayerObject->MeshRender()->GetMaterial()->SetScalarParam(ScalarParam::Mat_1, Mat);
+
+	PlayerObject->MeshRender()->GetMaterial()->SetTexParam(
+		TextureParam::Texture_0, 
+		CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Character.png")
+	);
 
 	CurrentLevel->AddObject(0, PlayerObject);
 }

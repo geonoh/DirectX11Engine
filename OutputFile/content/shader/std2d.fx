@@ -45,12 +45,15 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
 
     if (g_int_0 == 0)
     {
-        vColor = g_tex.Sample(g_sampler0, _in.vUV);
+        vColor = g_tex_0.Sample(g_sampler0, _in.vUV);
     }
-
-    else if (g_int_0 == 1)
+    else if (g_vec4_3.y == 3.14)
     {
         vColor = float4(1.f, 1.f, 0.f, 1.f);
+    }
+    else if (g_mat_1[3][3] == 2.1)  // 쉐이더 코드는 배열인덱스가 1부터 시작
+    {
+        vColor = float4(0.f, 1.f, 1.f, 1.f);
     }
 
     return vColor;

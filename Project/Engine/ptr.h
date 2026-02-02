@@ -7,10 +7,48 @@ private:
 	T* Asset;
 
 public:
-	T* Get() { return Asset; }
-	T** GetAddressOf() { return &Asset; }
+	T* Get() const { return Asset; }
+	T** GetAddressOf() const { return &Asset; }
 
 public:
+	bool operator == (T* InAsset)
+	{
+		if (Asset == InAsset)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool operator != (T* InAsset)
+	{
+		if (Asset != InAsset)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	bool operator == (const Ptr<T>& InAsset)
+	{
+		if (Asset == InAsset.Asset)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	bool operator != (const Ptr<T>& InAsset)
+	{
+		if (Asset != InAsset.Asset)
+		{
+			return true;
+		}
+		return false;
+	}
+
 	void operator = (T* InAsset)
 	{
 		if (Asset)
@@ -78,3 +116,25 @@ public:
 		}
 	}
 };
+
+template<typename T>
+bool operator == (void* InAsset, const Ptr<T>& Ptr)
+{
+	if (InAsset == Ptr.Get())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+template<typename T>
+bool operator != (void* InAsset, const Ptr<T>& Ptr)
+{
+	if (InAsset != Ptr.Get())
+	{
+		return true;
+	}
+
+	return false;
+}

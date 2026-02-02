@@ -69,3 +69,9 @@ void CTexture::Binding(const int RegisterNum)
 {
 	CONTEXT->PSSetShaderResources(RegisterNum, 1, SRV.GetAddressOf());
 }
+
+void CTexture::Clear(const int RegisterNum)
+{
+	ID3D11ShaderResourceView* NullPtr = nullptr;
+	CONTEXT->PSSetShaderResources(RegisterNum, 1, &NullPtr);
+}
